@@ -206,10 +206,10 @@ public abstract class GlowEntity implements Entity {
 
     /**
      * Gravity acceleration applied each tick.
-     * The default value (0,0,0) indicates no gravity acceleration.
+     * The default value (0,0.14,0) indicates gravity acceleration.
      */
     @Setter
-    protected Vector gravityAccel = new Vector(0, 0, 0);
+    protected Vector gravityAccel = new Vector(0, 0.14, 0);
 
     /**
      * The slipperiness multiplier applied according to the block this entity was on.
@@ -564,10 +564,18 @@ public abstract class GlowEntity implements Entity {
             }
         }
 
+        // Set onGround
+        Location loc = getLocation().clone().getBlock().getRelative(BlockFace.DOWN).getLocation();
+        onGround = getLocation().clone().getBlock().getRelative(BlockFace.DOWN).getType().isSolid();
+
         if (this instanceof GlowLivingEntity && !isDead() && ((GlowLivingEntity) this).hasAI()
                 && this.getLocation().getChunk().isLoaded()) {
             GlowLivingEntity entity = (GlowLivingEntity) this;
+
+            // Ensure entity is standing on top of block not floating
+            setRawLocation(getLocation().clone().subtract(0, (loc.getY() - ((int)loc.getY())), 0));
             entity.getTaskManager().pulse();
+
         }
 
         followLead();
@@ -1027,40 +1035,34 @@ public abstract class GlowEntity implements Entity {
 
             collide(pendingBlock);
         } else {
-            if (hasFriction()) {
-                // apply friction and gravity
-                if (location.getBlock().getType() == Material.WATER) {
-                    velocity.multiply(liquidDrag);
-                    velocity.setY(velocity.getY() + getGravityAccel().getY() / 4);
-                } else if (location.getBlock().getType() == Material.LAVA) {
-                    velocity.multiply(liquidDrag - 0.3);
-                    velocity.setY(velocity.getY() + getGravityAccel().getY() / 4);
-                } else {
-                    if (applyDragBeforeAccel) {
-                        velocity.setY(airDrag * velocity.getY() + getGravityAccel().getY());
-                    } else {
-                        velocity.setY(airDrag * (velocity.getY() + getGravityAccel().getY()));
-                    }
 
-                    if (isOnGround()) {
-                        velocity.setX(velocity.getX() * slipMultiplier);
-                        velocity.setY(0);
-                        velocity.setZ(velocity.getZ() * slipMultiplier);
-                    } else {
-                        velocity.setX(velocity.getX() * airDrag);
-                        velocity.setZ(velocity.getZ() * airDrag);
-                    }
-                }
-            } else if (hasGravity() && !isOnGround()) {
-                switch (location.getBlock().getType()) {
-                    case WATER:
-                    case LAVA:
-                        velocity.setY(velocity.getY() + getGravityAccel().getY() / 4);
-                        break;
-                    default:
-                        velocity.setY(velocity.getY() + getGravityAccel().getY() / 4);
+            if(hasGravity()) {
+                // Apply gravity to entity
+                if(!isOnGround() && !location.getBlock().isLiquid()) {
+                    // Entity is in air (hopefully)
+                    velocity.subtract(getGravityAccel());
                 }
             }
+
+            if(hasFriction()) {
+                switch (location.getBlock().getType()) {
+                    case WATER:
+                        velocity.multiply(liquidDrag);
+                        break;
+                    case LAVA:
+                        velocity.multiply(liquidDrag - 0.3);
+                        break;
+                    default:
+                        velocity.setX(velocity.getX() * (isOnGround() ? slipMultiplier : airDrag));
+                        velocity.setZ(velocity.getZ() * (isOnGround() ? slipMultiplier : airDrag));
+                        break;
+                }
+            }
+
+            // Ensure entity will not float above the ground
+            pendingLocation.setY(Math.round(pendingLocation.getY()));
+
+            // Move entity to location
             setRawLocation(pendingLocation);
         }
     }

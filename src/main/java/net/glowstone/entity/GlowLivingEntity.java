@@ -254,6 +254,13 @@ public abstract class GlowLivingEntity extends GlowEntity implements LivingEntit
     private int adjacentBurnTicks;
 
     /**
+     * If the entity is jumping
+     */
+    @Getter
+    @Setter
+    private boolean isJumping = false;
+
+    /**
      * Creates a mob within the specified world.
      *
      * @param location The location.
@@ -403,28 +410,28 @@ public abstract class GlowLivingEntity extends GlowEntity implements LivingEntit
     @Override
     protected void pulsePhysics() {
 
+        // We will control the Y direction
+        movement.setY(0);
+
         // drag application
         movement.multiply(airDrag);
+
         // convert movement x/z to a velocity
         Vector velMovement = getVelocityFromMovement();
         velocity.add(velMovement);
 
-        if(!isOnGround() && !location.getBlock().isLiquid()) {
-
-            // Apply gravity (Falling)
-            velocity.setY(-0.8);
-
-        }
         super.pulsePhysics();
     }
 
-    protected Vector getVelocityFromMovement() {
-        // ensure movement vector is in correct format
-        movement.setY(0);
+    @Override
+    public void collide(Block block) {
+        jump();
+    }
 
+    protected Vector getVelocityFromMovement() {
         double mag = movement.getX() * movement.getX() + movement.getZ() * movement.getZ();
         // don't do insignificant movement
-        if (mag < 0.01) {
+        if (mag < 1) {
             return new Vector();
         }
         // unit vector of movement
@@ -458,16 +465,18 @@ public abstract class GlowLivingEntity extends GlowEntity implements LivingEntit
     }
 
     protected void jump() {
+        // TODO account for Potion Effect JUMP_BOOST
         if (location.getBlock().isLiquid()) {
             // jump out more when you breach the surface of the liquid
             if (location.getBlock().getRelative(BlockFace.UP).isEmpty()) {
-                velocity.setY(velocity.getY() + 0.3);
+                velocity.setY(velocity.getY() + 0.2);
+                return;
             }
             // less jumping in liquid
-            velocity.setY(velocity.getY() + 0.04);
+            velocity.setY(velocity.getY() + 0.3F);
         } else {
             // jump normally
-            velocity.setY(velocity.getY() + 0.42);
+            velocity.setY(velocity.getY() + 0.1F);
         }
     }
 

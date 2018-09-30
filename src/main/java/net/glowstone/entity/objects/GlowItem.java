@@ -31,7 +31,7 @@ import org.bukkit.util.Vector;
  * @author Graham Edgecombe
  */
 public class GlowItem extends GlowEntity implements Item {
-    private static final double VERTICAL_GRAVITY_ACCEL = -0.04;
+    private static final double VERTICAL_GRAVITY_ACCEL = 0.04;
 
     /**
      * The number of ticks (equal to 5 minutes) that item entities should live for.
