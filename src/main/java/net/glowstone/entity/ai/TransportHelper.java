@@ -18,10 +18,7 @@ public class TransportHelper {
      * @param speed the speed to move
      */
     public static void moveTowards(GlowLivingEntity entity, Location direction, double speed) {
-        Location location = entity.getLocation();
-        double deltaX = (direction.getX() - location.getX());
-        double deltaZ = (direction.getZ() - location.getZ());
         entity.setSpeed(speed);
-        entity.setMovement(new Vector(deltaX, 0, deltaZ));
+        entity.setMovement(direction.toVector().subtract(entity.getLocation().toVector()));
     }
 }

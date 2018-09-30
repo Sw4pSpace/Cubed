@@ -402,11 +402,19 @@ public abstract class GlowLivingEntity extends GlowEntity implements LivingEntit
 
     @Override
     protected void pulsePhysics() {
+
         // drag application
         movement.multiply(airDrag);
         // convert movement x/z to a velocity
         Vector velMovement = getVelocityFromMovement();
         velocity.add(velMovement);
+
+        if(!isOnGround() && !location.getBlock().isLiquid()) {
+
+            // Apply gravity (Falling)
+            velocity.setY(-0.8);
+
+        }
         super.pulsePhysics();
     }
 
@@ -429,11 +437,11 @@ public abstract class GlowLivingEntity extends GlowEntity implements LivingEntit
         movement.multiply(mag);
 
         // make velocity vector relative to where the entity is facing
-        double yaw = Math.toRadians(location.getYaw());
+        /*double yaw = Math.toRadians(location.getYaw());
         double z = Math.sin(yaw);
         double x = Math.cos(yaw);
-        movement.setX(movement.getZ() * x - movement.getX() * z);
-        movement.setZ(movement.getX() * x + movement.getZ() * z);
+        velocity.setX(movement.getZ() / x + movement.getX() / z);
+        velocity.setZ(movement.getX() / x - movement.getZ() / z);*/
 
         // apply the movement multiplier
         if (!isOnGround() || location.getBlock().isLiquid()) {
