@@ -1,7 +1,6 @@
 package net.glowstone.entity.monster;
 
 import com.flowpowered.network.Message;
-import java.util.List;
 import net.glowstone.entity.ai.EntityDirector;
 import net.glowstone.entity.ai.HostileMobState;
 import net.glowstone.entity.ai.MobState;
@@ -12,6 +11,8 @@ import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.entity.Zombie;
+
+import java.util.List;
 
 public class GlowZombie extends GlowMonster implements Zombie {
 
@@ -38,6 +39,7 @@ public class GlowZombie extends GlowMonster implements Zombie {
         if (type != null) {
             EntityDirector.registerEntityMobState(type, MobState.IDLE, "look_around");
             EntityDirector.registerEntityMobState(type, MobState.IDLE, "look_player");
+            EntityDirector.registerEntityMobState(type, HostileMobState.TARGETING, "look_player");
             EntityDirector.registerEntityMobState(type, HostileMobState.TARGETING, "follow_player");
         }
         setState(MobState.IDLE);
@@ -48,6 +50,18 @@ public class GlowZombie extends GlowMonster implements Zombie {
         //TODO - 1.11 Move this to ZombieVillager
         //metadata.set(MetadataIndex.ZOMBIE_IS_CONVERTING, conversionTime > 0);
         return super.createSpawnMessage();
+    }
+
+    @Override
+    public void pulse() {
+        super.pulse();
+
+        // Set zombie on fire if daytime
+        long time = location.getWorld().getTime();
+        if((time < 12300 || time > 23850) && location.getWorld().getHighestBlockYAt(location) == location.getBlockY()) {
+            setFireTicks(20);
+        }
+
     }
 
     @Override
