@@ -1,6 +1,7 @@
 package net.glowstone.entity.monster;
 
 import com.flowpowered.network.Message;
+import net.glowstone.entity.ai.AITask;
 import net.glowstone.entity.ai.EntityDirector;
 import net.glowstone.entity.ai.HostileMobState;
 import net.glowstone.entity.ai.MobState;
@@ -37,10 +38,9 @@ public class GlowZombie extends GlowMonster implements Zombie {
         super(loc, type, 20);
         setBoundingBox(0.6, 1.8);
         if (type != null) {
-            EntityDirector.registerEntityMobState(type, MobState.IDLE, "look_around");
-            EntityDirector.registerEntityMobState(type, MobState.IDLE, "look_player");
-            EntityDirector.registerEntityMobState(type, HostileMobState.TARGETING, "look_player");
-            EntityDirector.registerEntityMobState(type, HostileMobState.TARGETING, "follow_player");
+            EntityDirector.registerEntityMobState(type, MobState.IDLE, AITask.LOOK_AROUND);
+            EntityDirector.registerEntityMobState(type, MobState.IDLE, AITask.LOOK_PLAYER);
+            EntityDirector.registerEntityMobState(type, HostileMobState.TARGETING, AITask.FOLLOW_PLAYER);
         }
         setState(MobState.IDLE);
     }

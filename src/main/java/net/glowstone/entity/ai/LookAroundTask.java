@@ -9,7 +9,7 @@ public class LookAroundTask extends EntityTask {
     private int delay = ThreadLocalRandom.current().nextInt(10) + 15;
 
     public LookAroundTask() {
-        super("look_around");
+        super(AITask.LOOK_AROUND);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class LookAroundTask extends EntityTask {
 
     @Override
     public boolean shouldStart(GlowLivingEntity entity) {
-        EntityTask task = entity.getTaskManager().getTask("look_player");
+        EntityTask task = entity.getTaskManager().getTask(AITask.LOOK_PLAYER);
         return (task == null || !task.isExecuting())
             && ThreadLocalRandom.current().nextFloat() <= 0.1;
     }

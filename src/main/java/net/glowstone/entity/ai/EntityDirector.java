@@ -7,15 +7,17 @@ import java.util.List;
 import java.util.Map;
 import org.bukkit.entity.EntityType;
 
+import static net.glowstone.entity.ai.AITask.*;
+
 public class EntityDirector {
 
-    private static Map<EntityType, Map<MobState, List<String>>> mobStates = new HashMap<>();
-    private static Map<String, Class<? extends EntityTask>> tasks = new HashMap<>();
+    private static Map<EntityType, Map<MobState, List<AITask>>> mobStates = new HashMap<>();
+    private static Map<AITask, Class<? extends EntityTask>> tasks = new HashMap<>();
 
     static {
-        registerEntityTask("look_around", LookAroundTask.class);
-        registerEntityTask("look_player", LookAtPlayerTask.class);
-        registerEntityTask("follow_player", FollowPlayerTask.class);
+        registerEntityTask(LOOK_AROUND, LookAroundTask.class);
+        registerEntityTask(LOOK_PLAYER, LookAtPlayerTask.class);
+        registerEntityTask(FOLLOW_PLAYER, FollowPlayerTask.class);
     }
 
     /**
@@ -25,10 +27,10 @@ public class EntityDirector {
      * @param state a mob state
      * @param task the name of a task
      */
-    public static void registerEntityMobState(EntityType entity, MobState state, String task) {
-        Map<MobState, List<String>> states =
+    public static void registerEntityMobState(EntityType entity, MobState state, AITask task) {
+        Map<MobState, List<AITask>> states =
                 mobStates.computeIfAbsent(entity, entity_ -> new HashMap<>());
-        List<String> tasks = states.computeIfAbsent(state, state_ -> new ArrayList<>());
+        List<AITask> tasks = states.computeIfAbsent(state, state_ -> new ArrayList<>());
         tasks.add(task);
     }
 
@@ -39,8 +41,8 @@ public class EntityDirector {
      * @param state a mob state
      * @return the names of the registered tasks
      */
-    public static Collection<String> getEntityMobStateTask(EntityType entity, MobState state) {
-        Map<MobState, List<String>> tasks = mobStates.get(entity);
+    public static Collection<AITask> getEntityMobStateTask(EntityType entity, MobState state) {
+        Map<MobState, List<AITask>> tasks = mobStates.get(entity);
         if (tasks != null && tasks.containsKey(state)) {
             return tasks.get(state);
         }
@@ -54,7 +56,7 @@ public class EntityDirector {
      *         to invoke this task
      * @param task the class that implements the task
      */
-    public static void registerEntityTask(String name, Class<? extends EntityTask> task) {
+    public static void registerEntityTask(AITask name, Class<? extends EntityTask> task) {
         tasks.put(name, task);
     }
 
@@ -65,7 +67,7 @@ public class EntityDirector {
      *         to invoke this task
      * @return the class that implements the task, or null if none matches
      */
-    public static Class<? extends EntityTask> getEntityTask(String name) {
+    public static Class<? extends EntityTask> getEntityTask(AITask name) {
         return tasks.get(name);
     }
 }

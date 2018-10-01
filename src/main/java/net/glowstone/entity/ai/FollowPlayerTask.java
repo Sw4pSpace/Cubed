@@ -15,7 +15,7 @@ public class FollowPlayerTask extends EntityTask {
     private int delay = 1;
 
     public FollowPlayerTask() {
-        super("follow_player");
+        super(AITask.FOLLOW_PLAYER);
     }
 
     @Override

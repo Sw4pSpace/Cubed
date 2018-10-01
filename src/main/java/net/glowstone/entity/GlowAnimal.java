@@ -3,6 +3,8 @@ package net.glowstone.entity;
 import com.google.common.collect.Sets;
 import java.util.EnumSet;
 import java.util.Set;
+
+import net.glowstone.entity.ai.AITask;
 import net.glowstone.entity.ai.EntityDirector;
 import net.glowstone.entity.ai.MobState;
 import net.glowstone.net.message.play.player.InteractEntityMessage;
@@ -32,8 +34,8 @@ public class GlowAnimal extends GlowAgeable implements Animals {
     public GlowAnimal(Location location, EntityType type, double maxHealth) {
         super(location, type, maxHealth);
         if (type != null) {
-            EntityDirector.registerEntityMobState(type, MobState.IDLE, "look_around");
-            EntityDirector.registerEntityMobState(type, MobState.IDLE, "look_player");
+            EntityDirector.registerEntityMobState(type, MobState.IDLE, AITask.LOOK_AROUND);
+            EntityDirector.registerEntityMobState(type, MobState.IDLE, AITask.LOOK_PLAYER);
         }
         setState(MobState.IDLE);
     }

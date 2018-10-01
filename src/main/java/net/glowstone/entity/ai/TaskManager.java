@@ -11,7 +11,7 @@ import net.glowstone.entity.GlowLivingEntity;
 public class TaskManager {
 
     private final GlowLivingEntity entity;
-    private final Map<String, EntityTask> tasksByName = new ConcurrentHashMap<>();
+    private final Map<AITask, EntityTask> tasksByName = new ConcurrentHashMap<>();
     private final ClassToInstanceMap<EntityTask> tasksByClass = MutableClassToInstanceMap.create(
             new ConcurrentHashMap<>());
     private final Set<EntityTask> tasks = new ConcurrentSkipListSet<>();
@@ -26,7 +26,7 @@ public class TaskManager {
      * @param name the name to look up
      * @return the task with that name, or null if no registered task matches
      */
-    public EntityTask getTask(String name) {
+    public EntityTask getTask(AITask name) {
         return tasksByName.get(name);
     }
 
@@ -49,7 +49,7 @@ public class TaskManager {
      * @return a task with the given name, or null if none match or the matching task class doesn't
      *         have a parameterless constructor
      */
-    public EntityTask getNewTask(String name) {
+    public EntityTask getNewTask(AITask name) {
         // TODO: Refactor to use a constructor-reference Supplier<? extends EntityTask>
         Class<? extends EntityTask> clazz = EntityDirector.getEntityTask(name);
         try {
@@ -68,7 +68,7 @@ public class TaskManager {
      */
     public void updateState() {
         cancelTasks();
-        for (String task : EntityDirector
+        for (AITask task : EntityDirector
                 .getEntityMobStateTask(entity.getType(), entity.getState())) {
             addTask(task);
         }
@@ -106,7 +106,7 @@ public class TaskManager {
      */
     public void addTask(EntityTask task) {
         if (task != null) {
-            String name = task.getName();
+            AITask name = task.getName();
             EntityTask oldTask = getTask(name);
             if (oldTask != null) {
                 cancel(oldTask);
@@ -122,7 +122,7 @@ public class TaskManager {
      *
      * @param taskName the task name
      */
-    public void addTask(String taskName) {
+    public void addTask(AITask taskName) {
         EntityTask oldTask = getTask(taskName);
         if (oldTask != null) {
             cancel(oldTask);

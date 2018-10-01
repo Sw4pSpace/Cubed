@@ -12,7 +12,7 @@ public abstract class EntityTask implements Comparable<EntityTask> {
      * @return the name of this EntityTask.
      */
     @Getter
-    private final String name;
+    private final AITask name;
     /**
      * Whether this task is currently being executed.
      *
@@ -29,7 +29,7 @@ public abstract class EntityTask implements Comparable<EntityTask> {
     @Getter
     private boolean paused = false;
 
-    public EntityTask(String name) {
+    public EntityTask(AITask name) {
         this.name = name;
     }
 

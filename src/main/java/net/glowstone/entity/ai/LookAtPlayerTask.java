@@ -16,7 +16,7 @@ public class LookAtPlayerTask extends EntityTask {
     private int delay = 1;
 
     public LookAtPlayerTask() {
-        super("look_player");
+        super(AITask.LOOK_PLAYER);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class LookAtPlayerTask extends EntityTask {
 
     @Override
     public boolean shouldStart(GlowLivingEntity entity) {
-        EntityTask task = entity.getTaskManager().getTask("look_around");
+        EntityTask task = entity.getTaskManager().getTask(AITask.LOOK_AROUND);
         return task != null && !task.isExecuting()
             && ThreadLocalRandom.current().nextFloat() <= 0.025;
     }
