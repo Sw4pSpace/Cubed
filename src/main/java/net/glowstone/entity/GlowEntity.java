@@ -57,13 +57,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Vehicle;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.EntityPortalEnterEvent;
-import org.bukkit.event.entity.EntityPortalEvent;
-import org.bukkit.event.entity.EntityPortalExitEvent;
-import org.bukkit.event.entity.EntityTeleportEvent;
-import org.bukkit.event.entity.EntityUnleashEvent;
 import org.bukkit.event.entity.EntityUnleashEvent.UnleashReason;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.event.vehicle.VehicleEnterEvent;
@@ -604,6 +599,14 @@ public abstract class GlowEntity implements Entity {
                             setVelocity(e.getAfter());
                         }
                     }
+                }
+            }else if(currentBlock.getType().equals(Material.LAVA) || currentBlock.getType().equals(Material.FIRE)) {
+                // Combust entity
+                EntityCombustByBlockEvent event = new EntityCombustByBlockEvent(currentBlock, this, 15);
+                EventFactory.getInstance().callEvent(event);
+
+                if(!event.isCancelled()){
+                    setFireTicks(15);
                 }
             }
         }
