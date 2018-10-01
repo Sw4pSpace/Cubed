@@ -58,7 +58,7 @@ public class GlowZombie extends GlowMonster implements Zombie {
 
         // Set zombie on fire if daytime
         long time = location.getWorld().getTime();
-        if((time < 12300 || time > 23850) && location.getWorld().getHighestBlockYAt(location) == location.getBlockY()) {
+        if((time < 12300 || time > 23850) && location.getWorld().getHighestBlockYAt(location) == location.getBlockY() && !location.getWorld().hasStorm()) {
             setFireTicks(20);
         }
 
