@@ -1,6 +1,7 @@
 package net.glowstone.entity.monster;
 
 import com.flowpowered.network.Message;
+import net.glowstone.constants.GlowBiomeClimate;
 import net.glowstone.entity.ai.AITask;
 import net.glowstone.entity.ai.EntityDirector;
 import net.glowstone.entity.ai.HostileMobState;
@@ -9,6 +10,7 @@ import net.glowstone.entity.meta.MetadataIndex;
 import net.glowstone.util.SoundUtil;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.entity.Zombie;
@@ -58,7 +60,9 @@ public class GlowZombie extends GlowMonster implements Zombie {
 
         // Set zombie on fire if daytime
         long time = location.getWorld().getTime();
-        if((time < 12300 || time > 23850) && location.getWorld().getHighestBlockYAt(location) == location.getBlockY() && !location.getWorld().hasStorm()) {
+        if((time < 12300 || time > 23850) &&
+                location.getWorld().getHighestBlockYAt(location) == location.getBlockY() &&
+                (!location.getWorld().hasStorm() && GlowBiomeClimate.isRainy(location.getBlock().getRelative(BlockFace.SELF)))) {
             setFireTicks(20);
         }
 
