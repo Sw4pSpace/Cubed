@@ -494,6 +494,10 @@ public class GlowWorld implements World {
         saveWorld();
     }
 
+    public boolean isDaytime() {
+        return getTime() < 12541 || getTime() > 23458;
+    }
+
     private void updateActiveChunkCollection(GlowEntity entity) {
         // build a set of chunkManager around each player in this world, the
         // server view distance is taken here

@@ -24,6 +24,7 @@ import net.glowstone.GlowWorld;
 import net.glowstone.block.GlowBlock;
 import net.glowstone.block.ItemTable;
 import net.glowstone.block.blocktype.BlockType;
+import net.glowstone.constants.GlowBiomeClimate;
 import net.glowstone.constants.GlowPotionEffect;
 import net.glowstone.entity.AttributeManager.Key;
 import net.glowstone.entity.ai.MobState;

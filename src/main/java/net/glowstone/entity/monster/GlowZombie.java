@@ -14,8 +14,10 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.entity.Zombie;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
+import java.util.Random;
 
 public class GlowZombie extends GlowMonster implements Zombie {
 
@@ -56,16 +58,28 @@ public class GlowZombie extends GlowMonster implements Zombie {
 
     @Override
     public void pulse() {
-        super.pulse();
-
         // Set zombie on fire if daytime
-        long time = location.getWorld().getTime();
-        if((time < 12300 || time > 23850) &&
-                location.getWorld().getHighestBlockYAt(location) == location.getBlockY() &&
-                (!location.getWorld().hasStorm() && GlowBiomeClimate.isRainy(location.getBlock().getRelative(BlockFace.SELF)))) {
-            setFireTicks(20);
-        }
 
+        if(this.world.isDaytime() && !this.isBaby() && getFireTicks() <= 0 && !this.isWet()) {
+
+            if(this.world.getHighestBlockYAt(location) == this.location.getBlockY()) {
+                boolean burn = true;
+                if(getEquipment() != null) {
+                    ItemStack stack = getEquipment().getHelmet();
+
+                    if(stack != null) {
+                        // TODO Damage entity helmet if damageable
+                        burn = false;
+                    }
+                }
+
+                if(burn) {
+                    setFireTicks(160);
+                }
+            }
+
+        }
+        super.pulse();
     }
 
     @Override

@@ -22,6 +22,7 @@ import net.glowstone.EventFactory;
 import net.glowstone.GlowServer;
 import net.glowstone.GlowWorld;
 import net.glowstone.chunk.GlowChunk;
+import net.glowstone.constants.GlowBiomeClimate;
 import net.glowstone.entity.meta.MetadataIndex;
 import net.glowstone.entity.meta.MetadataIndex.StatusFlags;
 import net.glowstone.entity.meta.MetadataMap;
@@ -286,6 +287,11 @@ public abstract class GlowEntity implements Entity {
     @Getter
     @Setter
     private boolean op;
+
+    @Getter
+    @Setter
+    private boolean isWet = false;
+
     private Spigot spigot = new Spigot() {
         @Override
         public boolean isInvulnerable() {
@@ -620,6 +626,15 @@ public abstract class GlowEntity implements Entity {
             setLeashHolder(any.orElse(null));
             leashHolderUniqueId = null;
         }
+
+        isWet = false;
+        // If entity is on fire and is wet, put it out
+        if((this.world.hasStorm() && GlowBiomeClimate.isRainy(location.getBlock()) &&
+                this.world.getHighestBlockYAt(location) == this.location.getBlockY()) || location.getBlock().isLiquid()) {
+            setFireTicks(0);
+            isWet = true;
+        }
+
     }
 
     private void followLead() {
