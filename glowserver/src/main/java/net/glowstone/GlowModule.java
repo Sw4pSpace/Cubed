@@ -2,10 +2,7 @@ package net.glowstone;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
-import net.glowstone.io.persistence.OpsList;
-import net.glowstone.io.persistence.OpsListImpl;
-import net.glowstone.io.persistence.PersistenceManager;
-import net.glowstone.io.persistence.PersistenceManagerImpl;
+import net.glowstone.io.persistence.*;
 import net.glowstone.util.config.ServerConfig;
 
 import javax.naming.InitialContext;
@@ -34,6 +31,7 @@ public class GlowModule extends AbstractModule {
         bind(PersistenceManager.class).to(PersistenceManagerImpl.class);
 
         bind(OpsList.class).to(OpsListImpl.class);
+        bind(WhiteList.class).to(WhiteListImpl.class);
 
         /* JNDI */
         try {

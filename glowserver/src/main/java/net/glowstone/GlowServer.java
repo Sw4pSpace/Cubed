@@ -38,6 +38,7 @@ import net.glowstone.io.WorldStorageProviderFactory;
 import net.glowstone.io.anvil.AnvilWorldStorageProvider;
 import net.glowstone.io.persistence.OpsList;
 import net.glowstone.io.persistence.PersistenceManager;
+import net.glowstone.io.persistence.WhiteList;
 import net.glowstone.map.GlowMapView;
 import net.glowstone.net.GameServer;
 import net.glowstone.net.GlowSession;
@@ -181,7 +182,7 @@ public class GlowServer implements Server {
     /**
      * The list of players whitelisted on the server.
      */
-    private UuidListFile whitelist;
+    private WhiteList whitelist;
     /**
      * The BanList for player names.
      */
@@ -337,9 +338,10 @@ public class GlowServer implements Server {
     private final PersistenceManager persistenceManager;
 
     @Inject
-    public GlowServer(PersistenceManager persistenceManager, OpsList opsList) {
+    public GlowServer(PersistenceManager persistenceManager, OpsList opsList, WhiteList whiteList) {
         this.persistenceManager = persistenceManager;
         this.opsList = opsList;
+        this.whitelist = whiteList;
     }
 
     /**
@@ -369,7 +371,7 @@ public class GlowServer implements Server {
         this.config = config;
         // stuff based on selected config directory
         //opsList = new UuidListFile(config.getFile("ops.json"));
-        whitelist = new UuidListFile(config.getFile("whitelist.json"));
+        //whitelist = new UuidListFile(config.getFile("whitelist.json"));
         nameBans = new GlowBanList(this, Type.NAME);
         ipBans = new GlowBanList(this, Type.IP);
 
@@ -516,7 +518,7 @@ public class GlowServer implements Server {
 
         // Load player lists
         //opsList.load();
-        whitelist.load();
+        //whitelist.load();
         nameBans.load();
         ipBans.load();
         setPort(config.getInt(Key.SERVER_PORT));
@@ -1173,7 +1175,7 @@ public class GlowServer implements Server {
             // Reload relevant configuration
             loadConfig();
             //opsList.load();
-            whitelist.load();
+            //whitelist.load();
             nameBans.load();
             ipBans.load();
 
@@ -1299,7 +1301,7 @@ public class GlowServer implements Server {
      *
      * @return A file containing a list of UUIDs for this server's whitelisted players.
      */
-    public UuidListFile getWhitelist() {
+    public WhiteList getWhitelist() {
         return whitelist;
     }
 
@@ -1935,7 +1937,7 @@ public class GlowServer implements Server {
 
     @Override
     public void reloadWhitelist() {
-        whitelist.load();
+        //whitelist.load();
     }
 
     @Override

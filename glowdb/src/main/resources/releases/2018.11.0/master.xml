@@ -4,6 +4,13 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
+    <changeSet id="drop_table_world_if_exists" author="jdesive">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="world"/>
+        </preConditions>
+        <dropTable tableName="world" cascadeConstraints="true"/>
+    </changeSet>
+    
     <changeSet id="create_world_table" author="jdesive">
         <createTable tableName="world">
             <column name="id" type="serial">
@@ -19,6 +26,13 @@
         </rollback>
     </changeSet>
 
+    <changeSet id="drop_table_ops_if_exists" author="jdesive">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="ops"/>
+        </preConditions>
+        <dropTable tableName="ops" cascadeConstraints="true"/>
+    </changeSet>
+
     <changeSet id="create_ops_table" author="jdesive">
         <createTable tableName="ops">
             <column name="id" type="serial">
@@ -32,7 +46,31 @@
             </column>
         </createTable>
         <rollback>
-            <dropTable tableName="world"/>
+            <dropTable tableName="ops"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="drop_table_whitelist_if_exists" author="jdesive">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="whitelist"/>
+        </preConditions>
+        <dropTable tableName="whitelist" cascadeConstraints="true"/>
+    </changeSet>
+
+    <changeSet id="create_whitelist_table" author="jdesive">
+        <createTable tableName="whitelist">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" unique="true"/>
+            </column>
+            <column name="name" type="text">
+                <constraints unique="true"/>
+            </column>
+            <column name="uuid" type="text">
+                <constraints unique="true"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="whitelist"/>
         </rollback>
     </changeSet>
 

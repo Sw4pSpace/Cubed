@@ -30,7 +30,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
     private String applyParameters(String query, List<Object> parameters) {
         StringBuilder queryBuilder = new StringBuilder(query);
         for (Object parameter : parameters) {
-            int index = query.indexOf('?');
+            int index = queryBuilder.indexOf("?");
             queryBuilder.replace(index, index+1, String.valueOf(parameter));
         }
         return queryBuilder.toString();
