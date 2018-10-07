@@ -21,3 +21,8 @@ dependency-reduced-pom.xml
 .db
 .DS_Store
 .vscode
+/plugins/
+/logs/
+/config/
+/worlds/
+/classes/

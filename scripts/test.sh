@@ -7,14 +7,14 @@ cd "$BINDIR"
 if [ "$1" != "run" ];
 then
   # Build
-  ./build.sh
+  build.sh
 fi
 # Check if Maven built successfully
 # or if we didn't build, just run
 if [ $? -eq 0 ] || [ "$1" == "run" ];
 then
   # Run Glowstone
-  (cd ../target && ../scripts/start.sh)
+  (cd ../target && start.sh)
 else
   echo "Glowstone did not build successfully."
 fi
