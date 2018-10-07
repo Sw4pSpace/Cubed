@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+
+import com.destroystokyo.paper.profile.PlayerProfile;
 import lombok.Getter;
 import net.glowstone.entity.meta.profile.GlowPlayerProfile;
 import net.glowstone.entity.meta.profile.ProfileCache;
@@ -43,11 +45,11 @@ public final class GlowOfflinePlayer implements OfflinePlayer {
      * @param server The server of the offline player. Must not be null.
      * @param profile The profile associated with the player. Must not be null.
      */
-    public GlowOfflinePlayer(GlowServer server, GlowPlayerProfile profile) {
+    public GlowOfflinePlayer(GlowServer server, PlayerProfile profile) {
         checkNotNull(server, "server must not be null"); // NON-NLS
         checkNotNull(profile, "profile must not be null"); // NON-NLS
         this.server = server;
-        this.profile = profile;
+        this.profile = (GlowPlayerProfile) profile;
         loadData();
     }
 

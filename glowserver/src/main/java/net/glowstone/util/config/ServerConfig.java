@@ -402,6 +402,10 @@ public final class ServerConfig implements DynamicallyTypedMap<ServerConfig.Key>
         SHUTDOWN_MESSAGE("server.shutdown-message", "Server shutting down.", Migrate.BUKKIT,
                 "settings.shutdown-message", String.class::isInstance),
         ALLOW_CLIENT_MODS("server.allow-client-mods", true, Boolean.class::isInstance),
+        DATABASE_URL("server.database.url", "jdbc:postgresql://localhost:5432/glowstone", String.class::isInstance),
+        DATABASE_USER("server.database.user", "postgres", String.class::isInstance),
+        DATABASE_PASS("server.database.passs", "postgres", String.class::isInstance),
+        DATABASE_CLASS("server.database.class", "org.postgresql.Driver", String.class::isInstance),
 
         // console
         USE_JLINE("console.use-jline", true, Boolean.class::isInstance),

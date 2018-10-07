@@ -22,6 +22,7 @@
     <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <psql.version>42.1.4</psql.version>
 
     <!-- GlowServer Properties -->
     <api.version>1.12.2-R5.0-SNAPSHOT</api.version>
@@ -38,6 +39,7 @@
     <springframework.boot.version>1.5.11.RELEASE</springframework.boot.version>
 
     <!-- Glow Database Properties -->
+    <liquibase.version>3.5.3</liquibase.version>
     <db.url>localhost:5432/glowstone</db.url>
     <db.name>glowstone</db.name>
     <db.username>postgres</db.username>
@@ -81,6 +83,24 @@
       <artifactId>lombok</artifactId>
       <version>1.16.22</version>
       <scope>provided</scope>
+    </dependency>
+    <!-- Guice -->
+    <dependency>
+      <groupId>com.google.inject</groupId>
+      <artifactId>guice</artifactId>
+      <version>4.2.0</version>
+    </dependency>
+    <!-- PostgreSQL JDBC Driver -->
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>${psql.version}</version>
+    </dependency>
+    <!-- Guava -->
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>${guava.version}</version>
     </dependency>
   </dependencies>
 

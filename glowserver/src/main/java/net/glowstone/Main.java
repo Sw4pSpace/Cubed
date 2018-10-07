@@ -19,12 +19,12 @@ public class Main {
     private static GlowServer server;
 
     public static void main(String[] args) {
-
-        Injector guiceInjector = Guice.createInjector(new GlowModule());
+        ServerConfig serverConfig = parseArguments(args);
+        Injector guiceInjector = Guice.createInjector(new GlowModule(serverConfig));
 
         server = guiceInjector.getInstance(GlowServer.class);
 
-        server.init(parseArguments(args));
+        server.init(serverConfig);
 
         ConfigurationSerialization.registerClass(GlowOfflinePlayer.class);
         GlowPotionEffect.register();

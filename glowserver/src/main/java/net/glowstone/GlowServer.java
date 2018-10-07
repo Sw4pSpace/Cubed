@@ -1,17 +1,9 @@
 package net.glowstone;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
+import com.destroystokyo.paper.profile.PlayerProfile;
 import com.flowpowered.network.Message;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Iterators;
-import com.google.common.collect.ListMultimap;
-import com.google.common.collect.MultimapBuilder;
-import com.google.common.collect.Multimaps;
-import com.google.common.collect.Sets;
-import com.google.inject.Guice;
-import com.google.inject.ImplementedBy;
-import com.google.inject.Injector;
+import com.google.common.collect.*;
+import com.google.inject.Inject;
 import com.jogamp.opencl.CLDevice;
 import com.jogamp.opencl.CLPlatform;
 import com.tobedevoured.naether.NaetherException;
@@ -20,108 +12,20 @@ import com.tobedevoured.naether.impl.NaetherImpl;
 import com.tobedevoured.naether.util.RepoBuilder;
 import io.netty.channel.epoll.Epoll;
 import io.netty.channel.kqueue.KQueue;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.MalformedURLException;
-import java.nio.file.FileVisitResult;
-import java.nio.file.FileVisitor;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.security.KeyPair;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Random;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-import java.util.function.Function;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import javax.annotation.Nullable;
 import lombok.Getter;
 import net.glowstone.advancement.GlowAdvancement;
 import net.glowstone.advancement.GlowAdvancementDisplay;
 import net.glowstone.block.BuiltinMaterialValueManager;
 import net.glowstone.block.MaterialValueManager;
-import net.glowstone.block.entity.state.GlowDispenser;
 import net.glowstone.boss.GlowBossBar;
 import net.glowstone.command.glowstone.ColorCommand;
 import net.glowstone.command.glowstone.GlowstoneCommand;
-import net.glowstone.command.minecraft.BanCommand;
-import net.glowstone.command.minecraft.BanIpCommand;
-import net.glowstone.command.minecraft.BanListCommand;
-import net.glowstone.command.minecraft.ClearCommand;
-import net.glowstone.command.minecraft.CloneCommand;
-import net.glowstone.command.minecraft.DefaultGameModeCommand;
-import net.glowstone.command.minecraft.DeopCommand;
-import net.glowstone.command.minecraft.DifficultyCommand;
-import net.glowstone.command.minecraft.EffectCommand;
-import net.glowstone.command.minecraft.EnchantCommand;
-import net.glowstone.command.minecraft.FunctionCommand;
-import net.glowstone.command.minecraft.GameModeCommand;
-import net.glowstone.command.minecraft.GameRuleCommand;
-import net.glowstone.command.minecraft.GiveCommand;
-import net.glowstone.command.minecraft.KickCommand;
-import net.glowstone.command.minecraft.KillCommand;
-import net.glowstone.command.minecraft.ListCommand;
-import net.glowstone.command.minecraft.MeCommand;
-import net.glowstone.command.minecraft.OpCommand;
-import net.glowstone.command.minecraft.PardonCommand;
-import net.glowstone.command.minecraft.PardonIpCommand;
-import net.glowstone.command.minecraft.PlaySoundCommand;
-import net.glowstone.command.minecraft.SaveAllCommand;
-import net.glowstone.command.minecraft.SaveToggleCommand;
-import net.glowstone.command.minecraft.SayCommand;
-import net.glowstone.command.minecraft.SeedCommand;
-import net.glowstone.command.minecraft.SetBlockCommand;
-import net.glowstone.command.minecraft.SetIdleTimeoutCommand;
-import net.glowstone.command.minecraft.SetWorldSpawnCommand;
-import net.glowstone.command.minecraft.SpawnPointCommand;
-import net.glowstone.command.minecraft.StopCommand;
-import net.glowstone.command.minecraft.SummonCommand;
-import net.glowstone.command.minecraft.TeleportCommand;
-import net.glowstone.command.minecraft.TellCommand;
-import net.glowstone.command.minecraft.TellrawCommand;
-import net.glowstone.command.minecraft.TestForBlockCommand;
-import net.glowstone.command.minecraft.TestForBlocksCommand;
-import net.glowstone.command.minecraft.TestForCommand;
-import net.glowstone.command.minecraft.TimeCommand;
-import net.glowstone.command.minecraft.TitleCommand;
-import net.glowstone.command.minecraft.ToggleDownfallCommand;
-import net.glowstone.command.minecraft.TpCommand;
-import net.glowstone.command.minecraft.WeatherCommand;
-import net.glowstone.command.minecraft.WhitelistCommand;
-import net.glowstone.command.minecraft.WorldBorderCommand;
-import net.glowstone.command.minecraft.XpCommand;
-import net.glowstone.constants.GlowEnchantment;
-import net.glowstone.constants.GlowPotionEffect;
+import net.glowstone.command.minecraft.*;
 import net.glowstone.entity.EntityIdManager;
 import net.glowstone.entity.FishingRewardManager;
 import net.glowstone.entity.GlowPlayer;
 import net.glowstone.entity.meta.profile.GlowPlayerProfile;
-import net.glowstone.generator.GlowChunkData;
-import net.glowstone.generator.NetherGenerator;
-import net.glowstone.generator.OverworldGenerator;
-import net.glowstone.generator.SuperflatGenerator;
-import net.glowstone.generator.TheEndGenerator;
+import net.glowstone.generator.*;
 import net.glowstone.i18n.ConsoleMessages;
 import net.glowstone.i18n.GlowstoneMessages;
 import net.glowstone.inventory.GlowInventory;
@@ -132,6 +36,8 @@ import net.glowstone.io.PlayerStatisticIoService;
 import net.glowstone.io.ScoreboardIoService;
 import net.glowstone.io.WorldStorageProviderFactory;
 import net.glowstone.io.anvil.AnvilWorldStorageProvider;
+import net.glowstone.io.persistence.OpsList;
+import net.glowstone.io.persistence.PersistenceManager;
 import net.glowstone.map.GlowMapView;
 import net.glowstone.net.GameServer;
 import net.glowstone.net.GlowSession;
@@ -144,15 +50,7 @@ import net.glowstone.net.rcon.RconServer;
 import net.glowstone.scheduler.GlowScheduler;
 import net.glowstone.scheduler.WorldScheduler;
 import net.glowstone.scoreboard.GlowScoreboardManager;
-import net.glowstone.util.CompatibilityBundle;
-import net.glowstone.util.GlowHelpMap;
-import net.glowstone.util.GlowServerIcon;
-import net.glowstone.util.GlowUnsafeValues;
-import net.glowstone.util.NoInline;
-import net.glowstone.util.OpenCompute;
-import net.glowstone.util.SecurityUtils;
-import net.glowstone.util.ShutdownMonitorThread;
-import net.glowstone.util.TextMessage;
+import net.glowstone.util.*;
 import net.glowstone.util.bans.GlowBanList;
 import net.glowstone.util.bans.UuidListFile;
 import net.glowstone.util.config.ServerConfig;
@@ -163,58 +61,30 @@ import net.glowstone.util.library.LibraryKey;
 import net.glowstone.util.library.LibraryManager;
 import net.glowstone.util.loot.LootingManager;
 import net.md_5.bungee.api.chat.BaseComponent;
-import org.bukkit.BanEntry;
-import org.bukkit.BanList;
+import org.bukkit.*;
 import org.bukkit.BanList.Type;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Difficulty;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
-import org.bukkit.UnsafeValues;
 import org.bukkit.Warning.WarningState;
-import org.bukkit.World;
 import org.bukkit.World.Environment;
-import org.bukkit.WorldCreator;
-import org.bukkit.WorldType;
 import org.bukkit.advancement.Advancement;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandException;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.command.PluginCommand;
-import org.bukkit.command.SimpleCommandMap;
+import org.bukkit.command.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
-import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.ChunkGenerator.ChunkData;
 import org.bukkit.help.HelpMap;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemFactory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Merchant;
-import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.*;
 import org.bukkit.permissions.Permissible;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginLoadOrder;
-import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.ServicesManager;
-import org.bukkit.plugin.SimplePluginManager;
-import org.bukkit.plugin.SimpleServicesManager;
+import org.bukkit.plugin.*;
 import org.bukkit.plugin.java.JavaPluginLoader;
 import org.bukkit.plugin.messaging.Messenger;
 import org.bukkit.plugin.messaging.StandardMessenger;
@@ -222,12 +92,31 @@ import org.bukkit.util.CachedServerIcon;
 import org.bukkit.util.permissions.DefaultPermissions;
 import org.jetbrains.annotations.NonNls;
 
+import javax.annotation.Nullable;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.MalformedURLException;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.security.KeyPair;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.Function;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * The core class of the Glowstone server.
  *
  * @author Graham Edgecombe
  */
-public class GlowServer implements Server, IGlowServer{
+public class GlowServer implements Server {
 
     /**
      * The logger for this class.
@@ -288,7 +177,7 @@ public class GlowServer implements Server, IGlowServer{
     /**
      * The list of OPs on the server.
      */
-    private UuidListFile opsList;
+    private OpsList opsList;
     /**
      * The list of players whitelisted on the server.
      */
@@ -405,7 +294,7 @@ public class GlowServer implements Server, IGlowServer{
     /**
      * Additional Spigot APIs for the server.
      */
-    private Spigot spigot = new Spigot() {
+    private org.bukkit.Server.Spigot spigot = new org.bukkit.Server.Spigot() {
         public org.bukkit.configuration.file.YamlConfiguration getConfig() {
             return config.getConfig();
         }
@@ -445,6 +334,14 @@ public class GlowServer implements Server, IGlowServer{
             new LibraryKey("it.unimi.dsi", "fastutil")
     );
 
+    private final PersistenceManager persistenceManager;
+
+    @Inject
+    public GlowServer(PersistenceManager persistenceManager, OpsList opsList) {
+        this.persistenceManager = persistenceManager;
+        this.opsList = opsList;
+    }
+
     /**
      * Creates a new server.
      *
@@ -471,7 +368,7 @@ public class GlowServer implements Server, IGlowServer{
 
         this.config = config;
         // stuff based on selected config directory
-        opsList = new UuidListFile(config.getFile("ops.json"));
+        //opsList = new UuidListFile(config.getFile("ops.json"));
         whitelist = new UuidListFile(config.getFile("whitelist.json"));
         nameBans = new GlowBanList(this, Type.NAME);
         ipBans = new GlowBanList(this, Type.IP);
@@ -618,7 +515,7 @@ public class GlowServer implements Server, IGlowServer{
         }
 
         // Load player lists
-        opsList.load();
+        //opsList.load();
         whitelist.load();
         nameBans.load();
         ipBans.load();
@@ -1275,7 +1172,7 @@ public class GlowServer implements Server, IGlowServer{
         try {
             // Reload relevant configuration
             loadConfig();
-            opsList.load();
+            //opsList.load();
             whitelist.load();
             nameBans.load();
             ipBans.load();
@@ -1393,7 +1290,7 @@ public class GlowServer implements Server, IGlowServer{
      *
      * @return A file containing a list of UUIDs for this server's operators.
      */
-    public UuidListFile getOpsList() {
+    public OpsList getOpsList() {
         return opsList;
     }
 
@@ -1663,7 +1560,7 @@ public class GlowServer implements Server, IGlowServer{
     }
 
     @Override
-    public Spigot spigot() {
+    public org.bukkit.Server.Spigot spigot() {
         return spigot;
     }
 
@@ -1905,7 +1802,7 @@ public class GlowServer implements Server, IGlowServer{
      * @param profile the player's profile.
      * @return a new {@link GlowOfflinePlayer} instance for the given profile.
      */
-    public OfflinePlayer getOfflinePlayer(GlowPlayerProfile profile) {
+    public OfflinePlayer getOfflinePlayer(PlayerProfile profile) {
         return new GlowOfflinePlayer(this, profile);
     }
 
@@ -2136,9 +2033,17 @@ public class GlowServer implements Server, IGlowServer{
     @Override
     public GlowWorld createWorld(WorldCreator creator) {
         GlowWorld world = getWorld(creator.name());
+
         if (world != null) {
             return world;
         }
+
+/*      TODO Needs to make sure one does not exist first
+        String query = "INSERT INTO public.world (name, leveltype) VALUES (\'?\', \'?\');";
+        List<Object> params = Lists.newArrayList(creator.name(), creator.type().getName());
+        logger.info("" + persistenceManager.executeInsert(query, params));
+*/
+
         if (isGenerationDisabled()) {
             ConsoleMessages.Warn.WorldGen.DISABLED.log(creator.name());
         }

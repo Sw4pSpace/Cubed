@@ -122,7 +122,7 @@ public class GlowPlayerTest extends GlowHumanEntityTest<GlowPlayer> {
         scheduler = new GlowScheduler(server, worldScheduler);
         when(session.getServer()).thenReturn(server);
         when(server.getScheduler()).thenReturn(scheduler);
-        when(server.getOpsList()).thenReturn(opsList);
+        //when(server.getOpsList()).thenReturn(opsList); TODO add tests for new {@link OpsList}
         when(server.getPlayerStatisticIoService()).thenReturn(statisticIoService);
         when(world.getSpawnLocation()).thenReturn(location);
         when(world.getBlockAt(anyInt(), anyInt(), anyInt())).thenReturn(block);

@@ -11,21 +11,11 @@
 
     <artifactId>glowdb</artifactId>
 
-    <properties>
-        <liquibase.version>3.5.3</liquibase.version>
-        <psql.version>42.1.4</psql.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
             <version>${liquibase.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${psql.version}</version>
         </dependency>
     </dependencies>
 
