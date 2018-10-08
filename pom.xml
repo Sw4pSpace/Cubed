@@ -3,19 +3,24 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>net.glowstone</groupId>
-  <artifactId>glowstone</artifactId>
+  <groupId>com.sw4pspace</groupId>
+  <artifactId>cubed</artifactId>
   <packaging>pom</packaging>
   <version>2018.10.0-SNAPSHOT</version>
   <modules>
-    <module>glow-server</module>
-    <module>glow-webservices</module>
-    <module>glow-api</module>
-      <module>glow-db</module>
+    <module>cubed-server</module>
+    <module>cubed-webservices</module>
+    <module>cubed-api</module>
+    <module>cubed-db</module>
   </modules>
-  <name>Glowstone</name>
-  <url>https://www.glowstone.net</url>
+  <name>Cubed</name>
+  <url>https://www.cubedserver.net</url>
   <description>A fast, customizable and compatible open source Minecraft server.</description>
+
+  <organization>
+    <name>Sw4pSpace</name>
+    <url>https://sw4pspace.net</url>
+  </organization>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -50,28 +55,45 @@
   </properties>
 
   <repositories>
-    <!-- Glowstone Repo's-->
+    <!-- Sw4Space Repo's-->
     <repository>
-      <id>glowstone-internal</id>
-      <url>https://repo.glowstone.net/repository/internal/</url>
+      <id>sw4pspace-internal</id>
+      <url>http://nexus.sw4pspace.net/repository/public/</url>
     </repository>
     <repository>
-      <id>glowstone-snapshots</id>
-      <url>https://repo.glowstone.net/repository/snapshots/</url>
+      <id>sw4pspace-snapshots</id>
+      <url>http://nexus.sw4pspace.net/repository/snapshots/</url>
+    </repository>
+    <!-- Spigot/Bungeecord-->
+    <repository>
+      <id>md_5-releases</id>
+      <url>https://repo.md-5.net/content/repositories/releases/</url>
+    </repository>
+    <!-- Aikar... Wish we could remove -->
+    <repository>
+      <id>aikar</id>
+      <url>https://repo.aikar.co/content/groups/aikar/</url>
     </repository>
   </repositories>
 
   <distributionManagement>
-    <!-- Glowstone Repo's -->
+    <!-- Sw4Space Repo's -->
     <repository>
-      <id>glowstone-upstream</id>
-      <url>https://repo.glowstone.net/content/repositories/releases/</url>
+      <id>sw4pspace-upstream</id>
+      <url>http://nexus.sw4pspace.net/nexus/content/repositories/releases/</url>
     </repository>
     <snapshotRepository>
-      <id>glowstone-upstream</id>
-      <url>https://repo.glowstone.net/content/repositories/snapshots/</url>
+      <id>sw4pspace-upstream</id>
+      <url>http://nexus.sw4pspace.net/nexus/content/repositories/snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
+
+  <scm>
+    <connection>scm:git:git://github.com/Sw4pSpace/cubed.git</connection>
+    <developerConnection>scm:git:git://github.com/Sw4pSpace/cubed.git</developerConnection>
+    <url>https://github.com/Sw4pSpace/cubed</url>
+    <tag>HEAD</tag>
+  </scm>
 
   <dependencies>
     <dependency>
