@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 
+import static net.glowstone.webservices.repositories.criteria.BannedPlayerCriteria.*;
+import static net.glowstone.webservices.repositories.criteria.BannedPlayerCriteria.withReason;
+import static net.glowstone.webservices.repositories.criteria.BannedPlayerCriteria.withSource;
+import static org.springframework.data.jpa.domain.Specifications.where;
+
 @RestController
 @RequestMapping("/banned")
 public class BannedController {
@@ -35,7 +40,16 @@ public class BannedController {
                                                @RequestParam(name = "reason", required = false)String reason) {
 
         BannedPlayerCriteria criteria = new BannedPlayerCriteria(id, target, created, expires, source, reason);
-        return bannedRepository.findByCriteria(criteria, new PageRequest(page, size));
+
+        if(criteria.isEmpty())
+            return bannedRepository.findAll(new PageRequest(page, size));
+
+        return  bannedRepository.findAll(where(withId(criteria.getId()))
+                .and(withTarget(criteria.getTarget()))
+                .and(withCreated(criteria.getCreated()))
+                .and(withExpires(criteria.getExpires()))
+                .and(withSource(criteria.getSource()))
+                .and(withReason(criteria.getReason())), new PageRequest(page, size));
 
     }
 

@@ -17,8 +17,8 @@ import java.util.Date;
 public class BannedPlayer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "serial")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String target;
