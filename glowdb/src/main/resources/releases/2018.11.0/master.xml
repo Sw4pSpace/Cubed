@@ -74,4 +74,29 @@
         </rollback>
     </changeSet>
 
+    <changeSet id="drop_table_banned_if_exists" author="jdesive">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="banned"/>
+        </preConditions>
+        <dropTable tableName="banned" cascadeConstraints="true"/>
+    </changeSet>
+
+    <changeSet id="create_banned_table" author="jdesive">
+        <createTable tableName="banned">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" unique="true"/>
+            </column>
+            <column name="target" type="text">
+                <constraints unique="true"/>
+            </column>
+            <column name="created" type="datetime"/>
+            <column name="expires" type="datetime"/>
+            <column name="source" type="text"/>
+            <column name="reason" type="text"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="banned"/>
+        </rollback>
+    </changeSet>
+
 </databaseChangeLog>

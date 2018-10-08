@@ -1,13 +1,10 @@
 package net.glowstone;
 
-public interface IGlowServer {
+import net.glowstone.io.persistence.BanList;
+import org.bukkit.Server;
 
-    void run();
+public interface IGlowServer extends Server {
 
-    void start();
-
-    //void shutdown();
-
-    void shutdown(String message);
+   BanList getBanList();
 
 }

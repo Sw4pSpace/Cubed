@@ -2,8 +2,13 @@ package net.glowstone.command.minecraft;
 
 import java.util.Collections;
 import java.util.List;
+
+import com.google.inject.Inject;
 import net.glowstone.GlowServer;
+import net.glowstone.IGlowServer;
 import net.glowstone.ServerProvider;
+import net.glowstone.i18n.ConsoleMessages;
+import net.glowstone.i18n.GlowstoneMessages;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,6 +16,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.VanillaCommand;
 
 public class BanCommand extends VanillaCommand {
+
+    @Inject private IGlowServer server;
 
     /**
      * Creates the instance for this command.
@@ -42,15 +49,13 @@ public class BanCommand extends VanillaCommand {
                     return;
                 }
                 if (args.length == 1) {
-                    Bukkit.getBanList(BanList.Type.NAME).addBan(player.getName(),
-                            null, null, null);
+                    server.getBanList().addBan(player.getName(), GlowstoneMessages.Kick.BANNED_REASON.get(), null, sender.getName());
                 } else {
                     StringBuilder reason = new StringBuilder();
                     for (int i = 1; i < args.length; i++) {
                         reason.append(args[i]).append(" ");
                     }
-                    Bukkit.getBanList(BanList.Type.NAME).addBan(player.getName(),
-                            reason.toString(), null, null);
+                    server.getBanList().addBan(player.getName(), reason.toString(), null, sender.getName());
                 }
                 sender.sendMessage("Banned player " + player.getName());
             });

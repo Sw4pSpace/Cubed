@@ -104,4 +104,15 @@ public class PersistenceManagerImpl implements PersistenceManager {
         }
     }
 
+    @Override
+    public DatabaseStatement execute(String query) {
+        try {
+            Connection c = createConnection();
+            return new DatabaseStatement(c.prepareStatement(query), c);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

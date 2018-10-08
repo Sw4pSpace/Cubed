@@ -1,12 +1,13 @@
 package net.glowstone.command.minecraft;
 
-import java.util.Collections;
 import net.glowstone.GlowServer;
 import net.glowstone.ServerProvider;
-import org.bukkit.BanList;
+import net.glowstone.io.persistence.BanList;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.VanillaCommand;
+
+import java.util.Collections;
 
 public class PardonCommand extends VanillaCommand {
 
@@ -38,10 +39,9 @@ public class PardonCommand extends VanillaCommand {
                 ex.printStackTrace();
                 return;
             }
-            BanList banList = server.getBanList(BanList.Type.NAME);
+            BanList banList = server.getBanList();
             if (!banList.isBanned(player.getName())) {
-                sender.sendMessage(ChatColor.RED + "Could not unban player " + player.getName()
-                        + ": not banned");
+                sender.sendMessage(ChatColor.RED + "Could not unban player " + player.getName() + ": not banned");
                 return;
             }
             banList.pardon(player.getName());

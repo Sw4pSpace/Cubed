@@ -3,7 +3,8 @@ package net.glowstone.io.persistence;
 public enum Table {
     WORLD("world"),
     OPS("ops"),
-    WHITELIST("whitelist");
+    WHITELIST("whitelist"),
+    BANNED("banned");
 
 
     private String tablename;

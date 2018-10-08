@@ -152,7 +152,7 @@ public final class GlowOfflinePlayer implements OfflinePlayer {
 
     @Override
     public boolean isBanned() {
-        return server.getBanList(Type.NAME).isBanned(getName());
+        return server.getBanList().isBanned(getName());
     }
 
     @Override

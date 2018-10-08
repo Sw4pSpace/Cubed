@@ -1391,7 +1391,7 @@ public class GlowPlayer extends GlowHumanEntity implements Player {
 
     @Override
     public boolean isBanned() {
-        return server.getBanList(BanList.Type.NAME).isBanned(getName());
+        return server.getBanList().isBanned(getName());
     }
 
     @Override

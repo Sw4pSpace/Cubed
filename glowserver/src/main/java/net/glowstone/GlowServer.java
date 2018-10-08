@@ -53,7 +53,6 @@ import net.glowstone.scheduler.WorldScheduler;
 import net.glowstone.scoreboard.GlowScoreboardManager;
 import net.glowstone.util.*;
 import net.glowstone.util.bans.GlowBanList;
-import net.glowstone.util.bans.UuidListFile;
 import net.glowstone.util.config.ServerConfig;
 import net.glowstone.util.config.ServerConfig.Key;
 import net.glowstone.util.config.WorldConfig;
@@ -117,7 +116,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Graham Edgecombe
  */
-public class GlowServer implements Server {
+public class GlowServer implements IGlowServer {
 
     /**
      * The logger for this class.
@@ -186,11 +185,7 @@ public class GlowServer implements Server {
     /**
      * The BanList for player names.
      */
-    private GlowBanList nameBans;
-    /**
-     * The BanList for IP addresses.
-     */
-    private GlowBanList ipBans;
+    private net.glowstone.io.persistence.BanList nameBans;
     /**
      * The EntityIdManager for this server.
      */
@@ -338,18 +333,19 @@ public class GlowServer implements Server {
     private final PersistenceManager persistenceManager;
 
     @Inject
-    public GlowServer(PersistenceManager persistenceManager, OpsList opsList, WhiteList whiteList) {
+    public GlowServer(PersistenceManager persistenceManager, OpsList opsList, WhiteList whiteList,
+                      ServerConfig serverConfig, net.glowstone.io.persistence.BanList banList) {
         this.persistenceManager = persistenceManager;
         this.opsList = opsList;
         this.whitelist = whiteList;
+        this.config = serverConfig;
+        this.nameBans = banList;
     }
 
     /**
-     * Creates a new server.
-     *
-     * @param config This server's config.
+     * Initializes the new server instance
      */
-    public void init(ServerConfig config) {
+    public void init() {
         worldConfig = new WorldConfig(config.getDirectory(), new File(config.getDirectory(), "worlds.yml"));
         Bukkit.setServer(this);
 
@@ -368,12 +364,11 @@ public class GlowServer implements Server {
                 -10F, 0));
         addAdvancement(advancement);
 
-        this.config = config;
         // stuff based on selected config directory
         //opsList = new UuidListFile(config.getFile("ops.json"));
         //whitelist = new UuidListFile(config.getFile("whitelist.json"));
-        nameBans = new GlowBanList(this, Type.NAME);
-        ipBans = new GlowBanList(this, Type.IP);
+        //nameBans = new GlowBanList(this, Type.NAME);
+        //ipBans = new GlowBanList(this, Type.IP);
 
         loadConfig();
     }
@@ -517,10 +512,6 @@ public class GlowServer implements Server {
         }
 
         // Load player lists
-        //opsList.load();
-        //whitelist.load();
-        nameBans.load();
-        ipBans.load();
         setPort(config.getInt(Key.SERVER_PORT));
         setIp(config.getString(Key.SERVER_IP));
 
@@ -1174,10 +1165,6 @@ public class GlowServer implements Server {
         try {
             // Reload relevant configuration
             loadConfig();
-            //opsList.load();
-            //whitelist.load();
-            nameBans.load();
-            ipBans.load();
 
             // Reset crafting
             craftingManager.resetRecipes();
@@ -1623,15 +1610,8 @@ public class GlowServer implements Server {
     }
 
     @Override
-    public BanList getBanList(Type type) {
-        switch (type) {
-            case NAME:
-                return nameBans;
-            case IP:
-                return ipBans;
-            default:
-                throw new IllegalArgumentException("Unknown BanList type " + type);
-        }
+    public net.glowstone.io.persistence.BanList getBanList() {
+        return nameBans;
     }
 
     @Override
@@ -1942,23 +1922,30 @@ public class GlowServer implements Server {
 
     @Override
     public Set<String> getIPBans() {
-        return ipBans.getBanEntries().stream().map(BanEntry::getTarget).collect(Collectors.toSet());
+        // TODO This is getting all bans including name bans.. dont know if this is anm issue but needs fixed
+        return nameBans.getBanEntries().stream().map(BanEntry::getTarget).collect(Collectors.toSet());
     }
 
     @Override
     public void banIP(String address) {
-        ipBans.addBan(address, null, null, null);
+        nameBans.addBan(address, GlowstoneMessages.Kick.BANNED_REASON.get(), null, "SERVER");
     }
 
     @Override
     public void unbanIP(String address) {
-        ipBans.pardon(address);
+        nameBans.pardon(address);
     }
 
     @Override
     public Set<OfflinePlayer> getBannedPlayers() {
         return nameBans.getBanEntries().stream().map(entry -> getOfflinePlayer(entry.getTarget()))
                 .collect(Collectors.toSet());
+    }
+
+    @Override
+    public BanList getBanList(Type type) {
+        //TODO remove when independent from glowkit
+        return null;
     }
 
     /**

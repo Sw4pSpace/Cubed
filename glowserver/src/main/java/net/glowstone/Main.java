@@ -13,10 +13,12 @@ import org.jetbrains.annotations.NonNls;
 import java.io.File;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main {
 
     private static GlowServer server;
+    private static AtomicBoolean generateConfigOnly = new AtomicBoolean(false);
 
     public static void main(String[] args) {
         ServerConfig serverConfig = parseArguments(args);
@@ -24,35 +26,18 @@ public class Main {
 
         server = guiceInjector.getInstance(GlowServer.class);
 
-        server.init(serverConfig);
+        server.init();
 
         ConfigurationSerialization.registerClass(GlowOfflinePlayer.class);
         GlowPotionEffect.register();
         GlowEnchantment.register();
         GlowDispenser.register();
 
-        server.run();
-
-/*        try {
-            server = createFromArguments(args);
-
-            // we don't want to run a server when called with --version, --help or --generate-config
-            if (server == null) {
-                return;
-            }
-*//*            if (generateConfigOnly) {
-                ConsoleMessages.Info.CONFIG_ONLY_DONE.log();
-                return;
-            }*//*
-
+        if(generateConfigOnly.get()){
+            ConsoleMessages.Info.CONFIG_ONLY_DONE.log();
+        }else {
             server.run();
-        } catch (SecurityException e) {
-            ConsoleMessages.Error.CLASSPATH.log(e);
-        } catch (Throwable t) {
-            // general server startup crash
-            ConsoleMessages.Error.STARTUP.log(t);
-            System.exit(1);
-        }*/
+        }
     }
 
     private static ServerConfig parseArguments(String... args) {
@@ -85,7 +70,7 @@ public class Main {
                 ));
                 return null;
             } else if ("--generate-config".equals(opt)) {
-                //generateConfigOnly = true;
+                generateConfigOnly.set(true);
             }
 
             // Below this point, options require parameters
@@ -149,7 +134,6 @@ public class Main {
         }
 
         File configDir = new File(configDirName);
-        //worldConfig = new WorldConfig(configDir, new File(configDir, "worlds.yml"));
         File configFile = new File(configDir, configFileName);
 
         return new ServerConfig(configDir, configFile, parameters);

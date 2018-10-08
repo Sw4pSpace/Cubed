@@ -3,6 +3,10 @@ package net.glowstone.command.minecraft;
 import com.google.common.net.InetAddresses;
 import java.util.Collections;
 import java.util.List;
+
+import com.google.inject.Inject;
+import net.glowstone.IGlowServer;
+import net.glowstone.i18n.GlowstoneMessages;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,6 +15,8 @@ import org.bukkit.command.defaults.VanillaCommand;
 import org.bukkit.entity.Player;
 
 public class BanIpCommand extends VanillaCommand {
+
+    @Inject private IGlowServer server;
 
     /**
      * Creates the instance for this command.
@@ -38,14 +44,13 @@ public class BanIpCommand extends VanillaCommand {
             }
             if (target != null) {
                 if (args.length == 1) {
-                    Bukkit.getBanList(BanList.Type.IP).addBan(target, null, null, null);
+                    server.getBanList().addBan(target, GlowstoneMessages.Kick.BANNED_REASON.get(), null, sender.getName());
                 } else {
                     StringBuilder reason = new StringBuilder();
                     for (int i = 1; i < args.length; i++) {
                         reason.append(args[i]).append(" ");
                     }
-                    Bukkit.getBanList(BanList.Type.IP)
-                        .addBan(target, reason.toString(), null, null);
+                    server.getBanList().addBan(target, reason.toString(), null, sender.getName());
                 }
                 sender.sendMessage("Banned IP address " + target);
                 return true;

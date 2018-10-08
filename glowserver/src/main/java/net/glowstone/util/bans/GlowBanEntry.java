@@ -15,7 +15,7 @@ import org.bukkit.OfflinePlayer;
 /**
  * Implementation of BanEntry.
  */
-final class GlowBanEntry implements BaseEntry, BanEntry, Cloneable {
+public final class GlowBanEntry implements BaseEntry, BanEntry, Cloneable {
 
     private final GlowBanList list;
     @Getter
@@ -29,7 +29,7 @@ final class GlowBanEntry implements BaseEntry, BanEntry, Cloneable {
     @Setter
     private String reason;
 
-    GlowBanEntry(GlowBanList list, String target, String reason, Date created, Date expires,
+    public GlowBanEntry(GlowBanList list, String target, String reason, Date created, Date expires,
         String source) {
         if (reason == null) {
             reason = "Banned";

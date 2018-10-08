@@ -27,6 +27,8 @@ public interface GlowstoneMessages {
     interface Kick {
         LocalizedString BANNED = new LocalizedStringImpl("glowstone.kick.banned");
 
+        LocalizedString BANNED_REASON = new LocalizedStringImpl("glowstone.kick.banned.reason");
+
         LocalizedString CREATIVE_ITEM = new LocalizedStringImpl("glowstone.kick.creative-item");
 
         LocalizedString FILE_READ = new LocalizedStringImpl("glowstone.kick.file-read");

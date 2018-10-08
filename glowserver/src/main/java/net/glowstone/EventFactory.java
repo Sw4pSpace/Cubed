@@ -1,23 +1,14 @@
 package net.glowstone;
 
 import com.destroystokyo.paper.event.profile.ProfileWhitelistVerifyEvent;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
 import lombok.Getter;
 import lombok.Setter;
 import net.glowstone.entity.GlowPlayer;
 import net.glowstone.i18n.ConsoleMessages;
 import net.glowstone.i18n.GlowstoneMessages;
 import net.glowstone.i18n.GlowstoneMessages.Kick;
+import net.glowstone.io.persistence.BanList;
 import net.glowstone.scheduler.GlowScheduler;
-import org.bukkit.BanList;
-import org.bukkit.BanList.Type;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.block.Block;
@@ -27,18 +18,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-import org.bukkit.event.player.PlayerChatEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerKickEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
-import org.bukkit.event.player.PlayerPreLoginEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.scheduler.BukkitScheduler;
+
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 /**
  * Central class for the calling of events.
@@ -132,25 +124,19 @@ public class EventFactory {
      * @return the completed event
      */
     public PlayerLoginEvent onPlayerLogin(GlowPlayer player, String hostname) {
-        Server server = player.getServer();
+        GlowServer server = player.getServer();
         InetAddress address = player.getAddress().getAddress();
         String addressString = address.getHostAddress();
         PlayerLoginEvent event = new PlayerLoginEvent(player, hostname, address);
 
-        BanList nameBans = server.getBanList(Type.NAME);
-        BanList ipBans = server.getBanList(Type.IP);
-
-        if (nameBans.isBanned(player.getName())) {
-            event.disallow(Result.KICK_BANNED,
-                    Kick.BANNED.get(nameBans.getBanEntry(player.getName()).getReason()));
-        } else if (ipBans.isBanned(addressString)) {
-            event.disallow(Result.KICK_BANNED,
-                    Kick.BANNED.get(ipBans.getBanEntry(addressString).getReason()));
-        } else if (checkWhitelisted(player, event)
-                && server.getOnlinePlayers().size() >= server.getMaxPlayers()) {
+        BanList bans = server.getBanList();
+        if (bans.isBanned(player.getName())) {
+            event.disallow(Result.KICK_BANNED, Kick.BANNED.get(bans.getBanEntry(player.getName()).getReason()));
+        } else if (bans.isBanned(addressString)) {
+            event.disallow(Result.KICK_BANNED, Kick.BANNED.get(bans.getBanEntry(addressString).getReason()));
+        } else if (!checkWhitelisted(player, event) && server.getOnlinePlayers().size() >= server.getMaxPlayers()) {
             event.disallow(Result.KICK_FULL, Kick.FULL.get(server.getMaxPlayers()));
         }
-
         return callEvent(event);
     }
 
