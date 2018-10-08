@@ -1,4 +1,4 @@
-package net.glowstone.webservices.repositories.criteria;
+package net.cubed.webservices.repositories.criteria;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

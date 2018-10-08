@@ -1,8 +1,10 @@
-package net.glowstone.webservices.controller;
+package net.cubed.webservices.controller;
 
-import net.glowstone.webservices.dto.OpPlayer;
-import net.glowstone.webservices.repositories.OpsRepository;
-import net.glowstone.webservices.repositories.criteria.OpPlayerCriteria;
+import io.swagger.annotations.ApiOperation;
+import net.cubed.webservices.repositories.specification.OpPlayerSpecification;
+import net.cubed.webservices.dto.OpPlayer;
+import net.cubed.webservices.repositories.OpsRepository;
+import net.cubed.webservices.repositories.criteria.OpPlayerCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,9 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import static net.glowstone.webservices.repositories.specification.OpPlayerSpecification.*;
 import static org.springframework.data.jpa.domain.Specifications.where;
 
+/**
+ * Represents the /op endpoint
+ *
+ * @author jdesive
+ */
 @RestController
 @RequestMapping("/op")
 public class OpController {
@@ -26,6 +32,7 @@ public class OpController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
+    @ApiOperation(tags = {"Op"}, value = "Search for Server Operators", nickname = "Search Ops", produces = "applications/json")
     public Page<OpPlayer> findWithCriteria(@RequestParam(name = "page", required = false, defaultValue = "0")int page,
                                            @RequestParam(name = "size", required = false, defaultValue = "15")int size,
                                            @RequestParam(name = "id", required = false)Long id,
@@ -37,9 +44,9 @@ public class OpController {
         if(criteria.isEmpty())
             return opsRepository.findAll(new PageRequest(page, size));
 
-        return opsRepository.findAll(where(withId(criteria.getId()))
-                .and(withName(criteria.getName()))
-                .and(withUuid(criteria.getUuid())), new PageRequest(page, size));
+        return opsRepository.findAll(where(OpPlayerSpecification.withId(criteria.getId()))
+                .and(OpPlayerSpecification.withName(criteria.getName()))
+                .and(OpPlayerSpecification.withUuid(criteria.getUuid())), new PageRequest(page, size));
 
     }
 

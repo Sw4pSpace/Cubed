@@ -1,4 +1,4 @@
-package net.glowstone.webservices.dto;
+package net.cubed.webservices.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +8,11 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * DTO for the banned table
+ *
+ * @author jdesive
+ */
 @Entity
 @Getter
 @Setter

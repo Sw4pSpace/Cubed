@@ -1,10 +1,15 @@
-package net.glowstone.webservices.repositories.specification;
+package net.cubed.webservices.repositories.specification;
 
-import net.glowstone.webservices.dto.BannedPlayer;
+import net.cubed.webservices.dto.BannedPlayer;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Date;
 
+/**
+ * Specifications for the BannedPlayer criteria
+ *
+ * @author jdesive
+ */
 public class BannedPlayerSpecification {
 
     public static Specification<BannedPlayer> withId(Long id) {

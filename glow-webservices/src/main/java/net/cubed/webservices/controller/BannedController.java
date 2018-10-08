@@ -1,8 +1,10 @@
-package net.glowstone.webservices.controller;
+package net.cubed.webservices.controller;
 
-import net.glowstone.webservices.dto.BannedPlayer;
-import net.glowstone.webservices.repositories.BannedRepository;
-import net.glowstone.webservices.repositories.criteria.BannedPlayerCriteria;
+import io.swagger.annotations.ApiOperation;
+import net.cubed.webservices.repositories.BannedRepository;
+import net.cubed.webservices.repositories.specification.BannedPlayerSpecification;
+import net.cubed.webservices.dto.BannedPlayer;
+import net.cubed.webservices.repositories.criteria.BannedPlayerCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,9 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 
-import static net.glowstone.webservices.repositories.specification.BannedPlayerSpecification.*;
 import static org.springframework.data.jpa.domain.Specifications.where;
 
+/**
+ * Represents the /banned endpoint
+ *
+ * @author jdesive
+ */
 @RestController
 @RequestMapping("/banned")
 public class BannedController {
@@ -28,6 +34,7 @@ public class BannedController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
+    @ApiOperation(tags = {"Banned"}, value = "Search for Banned Players", nickname = "Search Banned", produces = "applications/json")
     public Page<BannedPlayer> findWithCriteria(@RequestParam(name = "page", required = false, defaultValue = "0")int page,
                                                @RequestParam(name = "size", required = false, defaultValue = "15")int size,
                                                @RequestParam(name = "id", required = false)Long id,
@@ -42,12 +49,12 @@ public class BannedController {
         if(criteria.isEmpty())
             return bannedRepository.findAll(new PageRequest(page, size));
 
-        return  bannedRepository.findAll(where(withId(criteria.getId()))
-                .and(withTarget(criteria.getTarget()))
-                .and(withCreated(criteria.getCreated()))
-                .and(withExpires(criteria.getExpires()))
-                .and(withSource(criteria.getSource()))
-                .and(withReason(criteria.getReason())), new PageRequest(page, size));
+        return  bannedRepository.findAll(where(BannedPlayerSpecification.withId(criteria.getId()))
+                .and(BannedPlayerSpecification.withTarget(criteria.getTarget()))
+                .and(BannedPlayerSpecification.withCreated(criteria.getCreated()))
+                .and(BannedPlayerSpecification.withExpires(criteria.getExpires()))
+                .and(BannedPlayerSpecification.withSource(criteria.getSource()))
+                .and(BannedPlayerSpecification.withReason(criteria.getReason())), new PageRequest(page, size));
 
     }
 

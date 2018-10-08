@@ -1,8 +1,10 @@
-package net.glowstone.webservices.controller;
+package net.cubed.webservices.controller;
 
-import net.glowstone.webservices.dto.WhiteListPlayer;
-import net.glowstone.webservices.repositories.WhiteListRepository;
-import net.glowstone.webservices.repositories.criteria.WhiteListPlayerCriteria;
+import io.swagger.annotations.ApiOperation;
+import net.cubed.webservices.dto.WhiteListPlayer;
+import net.cubed.webservices.repositories.WhiteListRepository;
+import net.cubed.webservices.repositories.criteria.WhiteListPlayerCriteria;
+import net.cubed.webservices.repositories.specification.WhiteListPlayerSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,9 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import static net.glowstone.webservices.repositories.specification.WhiteListPlayerSpecification.*;
 import static org.springframework.data.jpa.domain.Specifications.where;
 
+/**
+ * Represents the /whitelist endpoint
+ *
+ * @author jdesive
+ */
 @RestController
 @RequestMapping("/whitelist")
 public class WhiteListController {
@@ -26,6 +32,7 @@ public class WhiteListController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
+    @ApiOperation(tags = {"WhiteList"}, value = "Search for WhiteListed Players", nickname = "Search WhiteList", produces = "applications/json")
     public Page<WhiteListPlayer> findWithCriteria(@RequestParam(name = "page", required = false, defaultValue = "0")int page,
                                                   @RequestParam(name = "size", required = false, defaultValue = "15")int size,
                                                   @RequestParam(name = "id", required = false)Long id,
@@ -37,9 +44,9 @@ public class WhiteListController {
         if(criteria.isEmpty())
             return whiteListRepository.findAll(new PageRequest(page, size));
 
-        return whiteListRepository.findAll(where(withId(criteria.getId()))
-                .and(withName(criteria.getName()))
-                .and(withUuid(criteria.getUuid())), new PageRequest(page, size));
+        return whiteListRepository.findAll(where(WhiteListPlayerSpecification.withId(criteria.getId()))
+                .and(WhiteListPlayerSpecification.withName(criteria.getName()))
+                .and(WhiteListPlayerSpecification.withUuid(criteria.getUuid())), new PageRequest(page, size));
 
     }
 

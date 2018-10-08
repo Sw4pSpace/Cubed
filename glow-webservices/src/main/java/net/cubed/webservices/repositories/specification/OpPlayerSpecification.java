@@ -1,26 +1,30 @@
-package net.glowstone.webservices.repositories.specification;
+package net.cubed.webservices.repositories.specification;
 
-import net.glowstone.webservices.dto.OpPlayer;
-import net.glowstone.webservices.dto.WhiteListPlayer;
+import net.cubed.webservices.dto.OpPlayer;
 import org.springframework.data.jpa.domain.Specification;
 
-public class WhiteListPlayerSpecification {
+/**
+ * Specifications for the OpPlayer criteria
+ *
+ * @author jdesive
+ */
+public class OpPlayerSpecification {
 
-    public static Specification<WhiteListPlayer> withId(Long id) {
+    public static Specification<OpPlayer> withId(Long id) {
         if(id != null) {
             return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("id"), id);
         }
         return null;
     }
 
-    public static Specification<WhiteListPlayer> withName(String name) {
+    public static Specification<OpPlayer> withName(String name) {
         if(name != null) {
             return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("name"), name);
         }
         return null;
     }
 
-    public static Specification<WhiteListPlayer> withUuid(String uuid) {
+    public static Specification<OpPlayer> withUuid(String uuid) {
         if(uuid != null) {
             return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("uuid"), uuid);
         }

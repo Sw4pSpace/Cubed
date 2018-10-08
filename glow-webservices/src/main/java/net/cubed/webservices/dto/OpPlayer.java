@@ -1,4 +1,4 @@
-package net.glowstone.webservices.dto;
+package net.cubed.webservices.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +7,11 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
+/**
+ * DTO for the ops table
+ *
+ * @author jdesive
+ */
 @Entity
 @Getter
 @Setter

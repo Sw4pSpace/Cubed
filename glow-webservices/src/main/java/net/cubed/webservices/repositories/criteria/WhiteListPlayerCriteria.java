@@ -1,18 +1,18 @@
-package net.glowstone.webservices.repositories.criteria;
+package net.cubed.webservices.repositories.criteria;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Represents the search criteria for the ops repository
+ * Represents the search criteria for the whitelist repository
  *
  * @author jdesive
  */
 @Setter
 @Getter
 @AllArgsConstructor
-public class OpPlayerCriteria {
+public class WhiteListPlayerCriteria {
 
     Long id;
     String name;
