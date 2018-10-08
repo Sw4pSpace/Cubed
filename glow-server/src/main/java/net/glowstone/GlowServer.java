@@ -52,7 +52,6 @@ import net.glowstone.scheduler.GlowScheduler;
 import net.glowstone.scheduler.WorldScheduler;
 import net.glowstone.scoreboard.GlowScoreboardManager;
 import net.glowstone.util.*;
-import net.glowstone.util.bans.GlowBanList;
 import net.glowstone.util.config.ServerConfig;
 import net.glowstone.util.config.ServerConfig.Key;
 import net.glowstone.util.config.WorldConfig;
@@ -63,7 +62,6 @@ import net.glowstone.util.loot.LootingManager;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.*;
 import org.bukkit.BanList.Type;
-import org.bukkit.Server;
 import org.bukkit.Warning.WarningState;
 import org.bukkit.World.Environment;
 import org.bukkit.advancement.Advancement;
@@ -91,6 +89,7 @@ import org.bukkit.plugin.messaging.StandardMessenger;
 import org.bukkit.util.CachedServerIcon;
 import org.bukkit.util.permissions.DefaultPermissions;
 import org.jetbrains.annotations.NonNls;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
 import java.awt.image.BufferedImage;
@@ -104,7 +103,6 @@ import java.security.KeyPair;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.Function;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -121,7 +119,7 @@ public class GlowServer implements IGlowServer {
     /**
      * The logger for this class.
      */
-    public static final Logger logger = Logger.getLogger("Minecraft"); // NON-NLS
+    public static final org.slf4j.Logger logger = LoggerFactory.getLogger(GlowServer.class);
     /**
      * The game version supported by the server.
      */
@@ -803,8 +801,7 @@ public class GlowServer implements IGlowServer {
                     RepoBuilder.remoteRepositoryFromUrl(repository)
             ));
         } catch (MalformedURLException e) {
-            logger.log(Level.WARNING, "Unable to resolve library dependencies. Falling back to "
-                    + "explicitly defined dependencies only.", e);
+            logger.warn("Unable to resolve library dependencies. Falling back to explicitly defined dependencies only.", e);
             return null;
         }
 
@@ -815,7 +812,7 @@ public class GlowServer implements IGlowServer {
         String bundleString = config.getString(Key.COMPATIBILITY_BUNDLE);
         CompatibilityBundle bundle = CompatibilityBundle.fromConfig(bundleString);
         if (bundle == null) {
-            logger.log(Level.SEVERE, "Unrecognized compatibility bundle: \"" + bundleString + "\"");
+            logger.error("Unrecognized compatibility bundle: \"" + bundleString + "\"");
             System.exit(1);
         }
 
@@ -826,7 +823,7 @@ public class GlowServer implements IGlowServer {
             .map(Library::fromConfigMap)
             .filter(library -> {
                 if (bundleLibs.containsKey(library.getLibraryKey())) {
-                    logger.log(Level.WARNING, String.format(
+                    logger.warn(String.format(
                         "Library '%s' is already defined as part of bundle '%s'. This entry within"
                             + " the 'libraries' config section will be ignored.",
                         library.getLibraryKey().toString(),
@@ -875,19 +872,13 @@ public class GlowServer implements IGlowServer {
             if (!conflicts.isEmpty()) {
                 String joinedConflicts = conflicts.stream()
                     .collect(Collectors.joining("', '", "['", "']"));
-                logger.log(Level.SEVERE, String.format(
-                    "Libraries %s conflict with libraries built into this JAR file. Please fix"
-                        + " this issue and restart the server.",
-                    joinedConflicts
-                ));
+                logger.error("Libraries {} conflict with libraries built into this JAR file. Please fix"
+                        + " this issue and restart the server.", joinedConflicts);
             }
             if (!duplicateLibs.isEmpty()) {
                 String joinedDuplicates = duplicateLibs.stream()
                     .collect(Collectors.joining("', '", "['", "']"));
-                logger.log(Level.SEVERE, String.format(
-                    "Libraries %s are defined multiple times in the 'libraries' config section.",
-                    joinedDuplicates
-                ));
+                logger.error("Libraries {} are defined multiple times in the 'libraries' config section.", joinedDuplicates);
             }
             System.exit(1);
         }
@@ -906,7 +897,7 @@ public class GlowServer implements IGlowServer {
                                     entry.getKey());
                             });
                     } catch (NaetherException e) {
-                        logger.log(Level.WARNING, "Unable to resolve library dependencies. Falling"
+                        logger.warn("Unable to resolve library dependencies. Falling"
                                 + " back to explicitly defined dependencies only.", e);
                         return Stream.empty();
                     }
@@ -1496,6 +1487,10 @@ public class GlowServer implements IGlowServer {
 
     @Override
     public Logger getLogger() {
+        return Logger.getLogger(logger.getName());
+    }
+
+    public org.slf4j.Logger getSlf4jLogger() {
         return logger;
     }
 

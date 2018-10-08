@@ -20,7 +20,7 @@ public final class UpdateSignHandler implements MessageHandler<GlowSession, Upda
             message.getZ());
 
         if (!player.checkSignLocation(location)) {
-            GlowServer.logger.warning(session + " tried to edit sign at " + location);
+            GlowServer.logger.warn("{} tried to edit sign at {}", session, location);
             return;
         }
         // filter out json messages that aren't plaintext
@@ -31,7 +31,7 @@ public final class UpdateSignHandler implements MessageHandler<GlowSession, Upda
         SignChangeEvent event = new SignChangeEvent(location.getBlock(), player, lines);
         EventFactory.getInstance().callEvent(event);
         if (event.isCancelled()) {
-            GlowServer.logger.warning("Sign was cancelled");
+            GlowServer.logger.warn("Sign was cancelled");
             return;
         }
         // update the sign if it's actually still there

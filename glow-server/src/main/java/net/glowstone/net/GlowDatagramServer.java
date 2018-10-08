@@ -60,9 +60,7 @@ public abstract class GlowDatagramServer extends GlowNetworkServer {
         try {
             bootstrap.config().group().terminationFuture().sync();
         } catch (InterruptedException e) {
-            GlowServer.logger.log(Level.SEVERE,
-                "Datagram server shutdown process interrupted!",
-                e);
+            GlowServer.logger.error("Datagram server shutdown process interrupted!", e);
         }
     }
 }

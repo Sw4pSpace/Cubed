@@ -134,8 +134,7 @@ public class WorldScheduler {
         // Mark ourselves as arrived so world threads automatically trigger advance once done
         int endPhase = tickEnd.arriveAndAwaitAdvance();
         if (endPhase != currentTick + 1) {
-            GlowServer.logger.warning("Tick end barrier " + endPhase
-                + " has advanced differently from tick begin barrier:" + currentTick + 1);
+            GlowServer.logger.warn("Tick end barrier {} has advanced differently from tick begin barrier: {}", endPhase, currentTick + 1);
         }
         synchronized (advanceCondition) {
             advanceCondition.notifyAll();
@@ -169,8 +168,7 @@ public class WorldScheduler {
                     try {
                         world.pulse();
                     } catch (Exception e) {
-                        GlowServer.logger.log(Level.SEVERE,
-                            "Error occurred while pulsing world " + world.getName(), e);
+                        GlowServer.logger.error("Error occurred while pulsing world " + world.getName(), e);
                     } finally {
                         tickEnd.arriveAndAwaitAdvance();
                     }

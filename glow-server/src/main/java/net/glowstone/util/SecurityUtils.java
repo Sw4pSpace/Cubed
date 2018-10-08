@@ -33,7 +33,7 @@ public final class SecurityUtils {
 
             keyPair = generator.generateKeyPair();
         } catch (NoSuchAlgorithmException ex) {
-            GlowServer.logger.log(Level.SEVERE, "Unable to generate RSA key pair", ex);
+            GlowServer.logger.error("Unable to generate RSA key pair", ex);
         }
         return keyPair;
     }
@@ -63,7 +63,7 @@ public final class SecurityUtils {
 
             key = keyFactory.generatePublic(encodedKeySpec);
         } catch (Exception ex) {
-            GlowServer.logger.log(Level.SEVERE, "Unable to generate X509 encoded key", ex);
+            GlowServer.logger.error("Unable to generate X509 encoded key", ex);
         }
         return key;
     }

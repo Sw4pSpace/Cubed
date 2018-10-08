@@ -45,9 +45,7 @@ public final class WindowClickHandler implements MessageHandler<GlowSession, Win
         try {
             result = process(session.getPlayer(), message);
         } catch (IllegalArgumentException ex) {
-            GlowServer.logger.warning(
-                    session.getPlayer().getName() + ": illegal argument while handling click: "
-                            + ex);
+            GlowServer.logger.warn("{}: illegal argument while handling click: {}", session.getPlayer().getName(), ex);
         }
         session.send(new TransactionMessage(message.getId(), message.getTransaction(), result));
         if (!result) {
@@ -174,9 +172,7 @@ public final class WindowClickHandler implements MessageHandler<GlowSession, Win
 
         if (clickType == ClickType.UNKNOWN || action == InventoryAction.UNKNOWN) {
             // show a warning for unknown click type
-            GlowServer.logger.warning(
-                    player.getName() + ": mystery window click " + clickType + "/" + action + ": "
-                            + message);
+            GlowServer.logger.warn("{}: mystery window click {}/{}: {}", player.getName(), clickType, action, message);
         }
 
         // deny CLONE_STACK for non-creative mode players
@@ -457,8 +453,7 @@ public final class WindowClickHandler implements MessageHandler<GlowSession, Win
         }
 
         if (!handled) {
-            GlowServer.logger.warning(
-                    player.getName() + ": unhandled click action " + action + " for " + message);
+            GlowServer.logger.warn("{}: unhandled click action {} for {}", player.getName(), action, message);
         }
 
         return handled;

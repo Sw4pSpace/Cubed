@@ -63,7 +63,7 @@ public final class EncryptionKeyResponseHandler implements
             sharedSecret = new SecretKeySpec(rsaCipher.doFinal(message.getSharedSecret()),
                     "AES"); // NON-NLS
         } catch (Exception ex) {
-            GlowServer.logger.log(Level.WARNING, "Could not decrypt shared secret", ex);
+            GlowServer.logger.warn("Could not decrypt shared secret", ex);
             session.disconnect("Unable to decrypt shared secret.");
             return;
         }
@@ -74,7 +74,7 @@ public final class EncryptionKeyResponseHandler implements
             rsaCipher.init(Cipher.DECRYPT_MODE, privateKey);
             verifyToken = rsaCipher.doFinal(message.getVerifyToken());
         } catch (Exception ex) {
-            GlowServer.logger.log(Level.WARNING, "Could not decrypt verify token", ex);
+            GlowServer.logger.warn("Could not decrypt verify token", ex);
             session.disconnect("Unable to decrypt verify token.");
             return;
         }
@@ -99,7 +99,7 @@ public final class EncryptionKeyResponseHandler implements
             // BigInteger takes care of sign and leading zeroes
             hash = new BigInteger(digest.digest()).toString(16);
         } catch (NoSuchAlgorithmException ex) {
-            GlowServer.logger.log(Level.SEVERE, "Unable to generate SHA-1 digest", ex);
+            GlowServer.logger.warn("Unable to generate SHA-1 digest", ex);
             session.disconnect("Failed to hash login data.");
             return;
         }
@@ -115,8 +115,7 @@ public final class EncryptionKeyResponseHandler implements
                 // unlikely to happen, because UTF-8 is part of the StandardCharset in Java
                 // but if it happens, the client will still able to login, because we won't add the
                 // IP parameter
-                GlowServer.logger
-                    .log(Level.WARNING, "Cannot encode ip address for proxy check", encodingEx);
+                GlowServer.logger.warn("Cannot encode ip address for proxy check", encodingEx);
             }
         }
 
@@ -134,8 +133,7 @@ public final class EncryptionKeyResponseHandler implements
             try {
                 json = (JSONObject) PARSER.parse(response); // TODO gson here
             } catch (ParseException e) {
-                GlowServer.logger.warning(
-                    "Username \"" + session.getVerifyUsername() + "\" failed to authenticate!");
+                GlowServer.logger.warn("Username \"{}\" failed to authenticate!", session.getVerifyUsername());
                 session.disconnect("Failed to verify username!");
                 return;
             }
@@ -148,8 +146,7 @@ public final class EncryptionKeyResponseHandler implements
             try {
                 uuid = UuidUtils.fromFlatString(id);
             } catch (IllegalArgumentException ex) {
-                GlowServer.logger
-                    .log(Level.SEVERE, "Returned authentication UUID invalid: " + id, ex);
+                GlowServer.logger.error("Returned authentication UUID invalid: " + id, ex);
                 session.disconnect("Invalid UUID.");
                 return;
             }
@@ -180,7 +177,7 @@ public final class EncryptionKeyResponseHandler implements
 
         @Override
         public void error(Throwable t) {
-            GlowServer.logger.log(Level.SEVERE, "Error in authentication thread", t);
+            GlowServer.logger.error("Error in authentication thread", t);
             session.disconnect("Internal error during authentication.", true);
         }
     }

@@ -101,15 +101,13 @@ public class QueryServer extends GlowDatagramServer {
 
     @Override
     public void onBindSuccess(InetSocketAddress address) {
-        GlowServer.logger.info("Successfully bound query to "
-                + address.getAddress().getHostAddress() + ":" + address.getPort() + '.');
+        GlowServer.logger.info("Successfully bound query to {}:{}.", address.getAddress().getHostAddress(), address.getPort());
         super.onBindSuccess(address);
     }
 
     @Override
     public void onBindFailure(InetSocketAddress address, Throwable t) {
-        GlowServer.logger.warning("Failed to bind query to "
-                + address.getAddress().getHostAddress() + ":" + address.getPort() + '.');
+        GlowServer.logger.warn("Failed to bind query to {}:{}.", address.getAddress().getHostAddress(), address.getPort());
     }
 
     /**

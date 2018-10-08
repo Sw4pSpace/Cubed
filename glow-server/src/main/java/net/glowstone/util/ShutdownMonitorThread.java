@@ -25,7 +25,7 @@ public class ShutdownMonitorThread extends Thread {
         try {
             Thread.sleep(DELAY);
         } catch (InterruptedException e) {
-            GlowServer.logger.log(Level.SEVERE, "Shutdown monitor interrupted", e);
+            GlowServer.logger.error("Shutdown monitor interrupted", e);
             System.exit(0);
             return;
         }
@@ -48,7 +48,7 @@ public class ShutdownMonitorThread extends Thread {
             try {
                 thread.join(1000);
             } catch (InterruptedException e) {
-                GlowServer.logger.log(Level.SEVERE, "Shutdown monitor interrupted", e);
+                GlowServer.logger.error("Shutdown monitor interrupted", e);
                 System.exit(0);
                 return;
             }

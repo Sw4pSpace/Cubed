@@ -42,7 +42,7 @@ public class QueryHandler extends SimpleChannelInboundHandler<DatagramPacket> {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        GlowServer.logger.log(Level.SEVERE, "Error in query handling", cause);
+        GlowServer.logger.error("Error in query handling", cause);
     }
 
     @Override

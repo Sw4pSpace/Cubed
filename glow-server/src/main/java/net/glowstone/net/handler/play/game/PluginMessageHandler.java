@@ -78,8 +78,7 @@ public final class PluginMessageHandler implements MessageHandler<GlowSession, P
                     try {
                         brand = ByteBufUtils.readUTF8(buf);
                     } catch (IOException e) {
-                        GlowServer.logger
-                            .log(Level.WARNING, "Error reading client brand of " + session, e);
+                        GlowServer.logger.warn("Error reading client brand of " + session, e);
                     }
                     if (brand != null && !brand.equals("vanilla")) {
                         GlowServer.logger
@@ -170,8 +169,7 @@ public final class PluginMessageHandler implements MessageHandler<GlowSession, P
                     try {
                         name = ByteBufUtils.readUTF8(buf);
                     } catch (IOException e) {
-                        GlowServer.logger
-                            .log(Level.WARNING, "Error reading anvil item name by " + session, e);
+                        GlowServer.logger.warn("Error reading anvil item name by " + session, e);
                         break;
                     }
                     ((GlowAnvilInventory) session.getPlayer().getOpenInventory().getTopInventory())

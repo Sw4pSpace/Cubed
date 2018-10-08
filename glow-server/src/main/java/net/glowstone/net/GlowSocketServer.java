@@ -73,8 +73,7 @@ public abstract class GlowSocketServer extends GlowNetworkServer {
             bootstrap.config().group().terminationFuture().sync();
             bootstrap.config().childGroup().terminationFuture().sync();
         } catch (InterruptedException e) {
-            GlowServer.logger.log(Level.SEVERE, "Socket server shutdown process interrupted!",
-                e);
+            GlowServer.logger.error("Socket server shutdown process interrupted!", e);
         }
     }
 }

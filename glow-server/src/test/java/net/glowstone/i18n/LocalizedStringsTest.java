@@ -1,30 +1,16 @@
 package net.glowstone.i18n;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-
 import com.google.common.base.CharMatcher;
 import com.google.common.collect.ImmutableMap;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Deque;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.*;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class LocalizedStringsTest {
     private static final ResourceBundle STRINGS = ResourceBundle.getBundle("strings");
@@ -33,7 +19,7 @@ public class LocalizedStringsTest {
     private static final String MOCK_VALUE_WITH_FORMAT = "bar {0} baz";
     private static final String MOCK_FORMAT_PARAMETER = "zappa";
     private static final String MOCK_VALUE_WITH_FORMAT_EXPECTED = "bar zappa baz";
-    private static final Level MOCK_LOG_LEVEL = Level.FINEST;
+    private static final org.slf4j.event.Level MOCK_LOG_LEVEL = org.slf4j.event.Level.DEBUG;
 
     @Test
     void testGetNoFormat() {
@@ -59,12 +45,12 @@ public class LocalizedStringsTest {
     void testLogNoFormat() {
         ResourceBundle mockBundle = new MockResourceBundle(ImmutableMap.of(MOCK_KEY, MOCK_VALUE_NO_FORMAT));
 
-        Logger mockLogger = mock(Logger.class);
+        org.slf4j.Logger mockLogger = mock(org.slf4j.Logger.class);
 
         LoggableLocalizedString localizedString = new LoggableLocalizedStringImpl(MOCK_KEY, MOCK_LOG_LEVEL, mockBundle, mockLogger);
         localizedString.log();
 
-        verify(mockLogger).log(MOCK_LOG_LEVEL, MOCK_VALUE_NO_FORMAT);
+        verify(mockLogger).debug(MOCK_VALUE_NO_FORMAT);
         verifyNoMoreInteractions(mockLogger);
     }
 
@@ -72,12 +58,12 @@ public class LocalizedStringsTest {
     void testLogWithFormat() {
         ResourceBundle mockBundle = new MockResourceBundle(ImmutableMap.of(MOCK_KEY, MOCK_VALUE_WITH_FORMAT));
 
-        Logger mockLogger = mock(Logger.class);
+        org.slf4j.Logger mockLogger = mock(org.slf4j.Logger.class);
 
         LoggableLocalizedString localizedString = new LoggableLocalizedStringImpl(MOCK_KEY, MOCK_LOG_LEVEL, mockBundle, mockLogger);
         localizedString.log(MOCK_FORMAT_PARAMETER);
 
-        verify(mockLogger).log(MOCK_LOG_LEVEL, MOCK_VALUE_WITH_FORMAT_EXPECTED);
+        verify(mockLogger).debug(MOCK_VALUE_WITH_FORMAT_EXPECTED);
         verifyNoMoreInteractions(mockLogger);
     }
 
@@ -85,14 +71,14 @@ public class LocalizedStringsTest {
     void testLogNoFormatWithException() {
         ResourceBundle mockBundle = new MockResourceBundle(ImmutableMap.of(MOCK_KEY, MOCK_VALUE_NO_FORMAT));
 
-        Logger mockLogger = mock(Logger.class);
+        org.slf4j.Logger mockLogger = mock(org.slf4j.Logger.class);
 
         Exception exception = new Exception();
 
         LoggableLocalizedString localizedString = new LoggableLocalizedStringImpl(MOCK_KEY, MOCK_LOG_LEVEL, mockBundle, mockLogger);
         localizedString.log(exception);
 
-        verify(mockLogger).log(MOCK_LOG_LEVEL, MOCK_VALUE_NO_FORMAT, exception);
+        verify(mockLogger).debug(MOCK_VALUE_NO_FORMAT, exception);
         verifyNoMoreInteractions(mockLogger);
     }
 
@@ -100,14 +86,14 @@ public class LocalizedStringsTest {
     void testLogWithFormatWithException() {
         ResourceBundle mockBundle = new MockResourceBundle(ImmutableMap.of(MOCK_KEY, MOCK_VALUE_WITH_FORMAT));
 
-        Logger mockLogger = mock(Logger.class);
+        org.slf4j.Logger mockLogger = mock(org.slf4j.Logger.class);
 
         Exception exception = new Exception();
 
         LoggableLocalizedString localizedString = new LoggableLocalizedStringImpl(MOCK_KEY, MOCK_LOG_LEVEL, mockBundle, mockLogger);
         localizedString.log(exception, MOCK_FORMAT_PARAMETER);
 
-        verify(mockLogger).log(MOCK_LOG_LEVEL, MOCK_VALUE_WITH_FORMAT_EXPECTED, exception);
+        verify(mockLogger).debug(MOCK_VALUE_WITH_FORMAT_EXPECTED, exception);
         verifyNoMoreInteractions(mockLogger);
     }
 

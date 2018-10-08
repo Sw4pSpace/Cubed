@@ -117,7 +117,7 @@ public final class GlowScheduler implements BukkitScheduler {
             try {
                 pulse();
             } catch (Exception ex) {
-                GlowServer.logger.log(Level.SEVERE, "Error while pulsing", ex);
+                GlowServer.logger.error("Error while pulsing", ex);
             }
         }, 0, PULSE_EVERY, TimeUnit.MILLISECONDS);
     }

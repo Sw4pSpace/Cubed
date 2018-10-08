@@ -47,7 +47,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
             ResultSet resultSet = stmt.executeQuery(query);
             return new DatabaseResult<>(resultSet, stmt, c);
         } catch ( SQLException e ) {
-            GlowServer.logger.log(Level.SEVERE,"Error executing query " + query, e);
+            GlowServer.logger.error("Error executing query " + query, e);
         }
         return null;
     }
@@ -81,7 +81,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
             int rows = stmt.executeUpdate(query);
             return new DatabaseResult<>(rows, stmt, c);
         } catch ( SQLException e ) {
-            GlowServer.logger.log(Level.SEVERE,"Error executing update " + query, e);
+            GlowServer.logger.error("Error executing update " + query, e);
         }
         return null;
     }

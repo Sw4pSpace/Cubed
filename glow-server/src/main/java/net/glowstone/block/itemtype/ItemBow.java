@@ -74,8 +74,7 @@ public class ItemBow extends ItemTimedUsage {
                 // Not in creative mode and have no arrow
                 break;
             default:
-                GlowServer.logger.log(Level.SEVERE, () ->
-                        String.format("Attempt to fire %s from a bow", arrowType));
+                GlowServer.logger.error("Attempt to fire {} from a bow", arrowType);
 
         }
         if (launchedProjectile != null) {

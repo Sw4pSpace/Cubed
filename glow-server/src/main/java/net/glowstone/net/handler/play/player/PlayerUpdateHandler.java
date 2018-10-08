@@ -55,7 +55,7 @@ public final class PlayerUpdateHandler implements MessageHandler<GlowSession, Pl
                     player.kickPlayer("You moved too quickly :( (Hacking?)");
                     return;
                 } else if (distance > 100) {
-                    GlowServer.logger.warning(player.getName() + " moved too quickly!");
+                    GlowServer.logger.warn("{} moved too quickly!", player.getName());
                 }
             }
         }

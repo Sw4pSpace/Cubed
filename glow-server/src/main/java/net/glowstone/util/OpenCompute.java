@@ -48,8 +48,7 @@ public class OpenCompute {
                         programs.put(name, program);
                         return program;
                     } catch (IOException ex) {
-                        GlowServer.logger.log(Level.WARNING,
-                                "Could not load custom OpenCL program.", ex);
+                        GlowServer.logger.warn("Could not load custom OpenCL program.", ex);
                     }
                 } else {
                     try (InputStream input = CLASS_LOADER
@@ -58,8 +57,7 @@ public class OpenCompute {
                         programs.put(name, program);
                         return program;
                     } catch (IOException ex) {
-                        GlowServer.logger.log(Level.WARNING,
-                                "Could not load builtin OpenCL program.", ex);
+                        GlowServer.logger.warn("Could not load builtin OpenCL program.", ex);
                     }
                 }
             }
@@ -108,7 +106,7 @@ public class OpenCompute {
         openCLDir = new File("opencl");
 
         if (!openCLDir.isDirectory() && !openCLDir.mkdirs()) {
-            GlowServer.logger.severe("Cannot create OpenCL directory");
+            GlowServer.logger.error("Cannot create OpenCL directory");
         }
 
         programs = new HashMap<>();

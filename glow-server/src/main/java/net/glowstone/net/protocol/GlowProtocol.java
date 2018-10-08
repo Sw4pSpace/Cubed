@@ -59,8 +59,7 @@ public abstract class GlowProtocol extends AbstractProtocol {
     public <M extends Message> MessageHandler<?, M> getMessageHandle(Class<M> clazz) {
         MessageHandler<?, M> handler = handlers.find(clazz);
         if (handler == null) {
-            GlowServer.logger
-                .warning("No message handler for: " + clazz.getSimpleName() + " in " + getName());
+            GlowServer.logger.warn("No message handler for: {} in {}", clazz.getSimpleName(), getName());
         }
         return handler;
     }
@@ -93,8 +92,7 @@ public abstract class GlowProtocol extends AbstractProtocol {
     public <M extends Message> CodecRegistration getCodecRegistration(Class<M> clazz) {
         CodecRegistration reg = outboundCodecs.find(clazz);
         if (reg == null) {
-            GlowServer.logger
-                .warning("No codec to write: " + clazz.getSimpleName() + " in " + getName());
+            GlowServer.logger.warn("No codec to write: {} in {}", clazz.getSimpleName(), getName());
         }
         return reg;
     }

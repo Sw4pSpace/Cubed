@@ -99,7 +99,7 @@ public final class ServerConfig implements DynamicallyTypedMap<ServerConfig.Key>
         try {
             config.save(configFile);
         } catch (IOException e) {
-            GlowServer.logger.log(Level.SEVERE, "Failed to write config: " + configFile, e);
+            GlowServer.logger.error("Failed to write config: " + configFile, e);
         }
     }
 
@@ -200,7 +200,7 @@ public final class ServerConfig implements DynamicallyTypedMap<ServerConfig.Key>
         try {
             conf.load(file);
         } catch (IOException e) {
-            GlowServer.logger.log(Level.SEVERE, "Failed to read config: " + file, e);
+            GlowServer.logger.error("Failed to read config: " + file, e);
         } catch (InvalidConfigurationException e) {
             report(file, e);
         }
@@ -237,7 +237,7 @@ public final class ServerConfig implements DynamicallyTypedMap<ServerConfig.Key>
 
             // create config directory
             if (!directory.isDirectory() && !directory.mkdirs()) {
-                GlowServer.logger.severe("Cannot create directory: " + directory);
+                GlowServer.logger.error("Cannot create directory: " + directory);
                 return;
             }
 
@@ -256,7 +256,7 @@ public final class ServerConfig implements DynamicallyTypedMap<ServerConfig.Key>
             try {
                 config.load(configFile);
             } catch (IOException e) {
-                GlowServer.logger.log(Level.SEVERE, "Failed to read config: " + configFile, e);
+                GlowServer.logger.error("Failed to read config: " + configFile, e);
             } catch (InvalidConfigurationException e) {
                 report(configFile, e);
             }
@@ -270,9 +270,7 @@ public final class ServerConfig implements DynamicallyTypedMap<ServerConfig.Key>
                     // validate existing values
                     Object val = config.get(key.path);
                     if (!key.validator.test(val)) {
-                        GlowServer.logger.warning(
-                                "Invalid config value for '" + key.path + "' (" + val + "), "
-                                        + "resetting to default (" + key.def + ")");
+                        GlowServer.logger.warn("Invalid config value for '{}' ({}), resetting to default ({})", key.path, val, key.def);
                         config.set(key.path, key.def);
                         changed = true;
                     }
@@ -288,7 +286,7 @@ public final class ServerConfig implements DynamicallyTypedMap<ServerConfig.Key>
     private void copyDefaults(String source, File dest) {
         URL resource = getClass().getClassLoader().getResource("defaults/" + source);
         if (resource == null) {
-            GlowServer.logger.warning("Could not find default " + source + " on classpath");
+            GlowServer.logger.warn("Could not find default {} on classpath", source);
             return;
         }
 
@@ -300,7 +298,7 @@ public final class ServerConfig implements DynamicallyTypedMap<ServerConfig.Key>
                 out.write(buf, 0, len);
             }
         } catch (IOException e) {
-            GlowServer.logger.log(Level.WARNING, "Could not save default config: " + dest, e);
+            GlowServer.logger.warn("Could not save default config: " + dest, e);
             return;
         }
 
@@ -309,12 +307,11 @@ public final class ServerConfig implements DynamicallyTypedMap<ServerConfig.Key>
 
     private void report(File file, InvalidConfigurationException e) {
         if (e.getCause() instanceof YAMLException) {
-            GlowServer.logger.severe("Config file " + file + " isn't valid! " + e.getCause());
+            GlowServer.logger.error("Config file {} isn't valid! ()" , file, e.getCause());
         } else if (e.getCause() == null || e.getCause() instanceof ClassCastException) {
-            GlowServer.logger.severe("Config file " + file + " isn't valid!");
+            GlowServer.logger.error("Config file {} isn't valid!", file);
         } else {
-            GlowServer.logger
-                    .log(Level.SEVERE, "Cannot load " + file + ": " + e.getCause().getClass(), e);
+            GlowServer.logger.error("Cannot load " + file + ": " + e.getCause().getClass(), e);
         }
     }
 
@@ -333,7 +330,7 @@ public final class ServerConfig implements DynamicallyTypedMap<ServerConfig.Key>
             } catch (InvalidConfigurationException e) {
                 report(bukkitYml, e);
             } catch (IOException e) {
-                GlowServer.logger.log(Level.WARNING, "Could not migrate from " + bukkitYml, e);
+                GlowServer.logger.warn("Could not migrate from " + bukkitYml, e);
             }
 
             for (Key key : Key.values()) {
@@ -353,7 +350,7 @@ public final class ServerConfig implements DynamicallyTypedMap<ServerConfig.Key>
             try {
                 props.load(new FileInputStream(serverProps));
             } catch (IOException e) {
-                GlowServer.logger.log(Level.WARNING, "Could not migrate from " + serverProps, e);
+                GlowServer.logger.warn("Could not migrate from " + serverProps, e);
             }
 
             for (Key key : Key.values()) {
@@ -363,9 +360,7 @@ public final class ServerConfig implements DynamicallyTypedMap<ServerConfig.Key>
                         try {
                             config.set(key.path, Integer.parseInt(value));
                         } catch (NumberFormatException e) {
-                            GlowServer.logger.log(Level.WARNING,
-                                    "Could not migrate " + key.migratePath + " from "
-                                            + serverProps, e);
+                            GlowServer.logger.warn("Could not migrate " + key.migratePath + " from " + serverProps, e);
                             continue;
                         }
                     } else if (key.def instanceof Boolean) {

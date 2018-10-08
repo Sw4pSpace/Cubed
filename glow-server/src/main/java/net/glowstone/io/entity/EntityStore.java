@@ -176,9 +176,7 @@ public abstract class EntityStore<T extends GlowEntity> {
                 passengers.add(compound);
                 savePassengers(glowEntity, compound);
             } catch (Exception e) {
-                GlowServer.logger
-                    .log(Level.WARNING, "Error saving " + passenger + " from vehicle " + vehicle,
-                        e);
+                GlowServer.logger.warn("Error saving " + passenger + " from vehicle " + vehicle, e);
             }
         }
         if (!passengers.isEmpty()) {

@@ -41,7 +41,7 @@ public final class GlowChannelInitializer extends ChannelInitializer<SocketChann
             c.config().setOption(ChannelOption.IP_TOS, 0x18);
         } catch (ChannelException e) {
             // Not supported on all OSs, like Windows XP and lesser
-            GlowServer.logger.warning("Your OS does not support type of service.");
+            GlowServer.logger.warn("Your OS does not support type of service.");
         }
 
         c.pipeline()

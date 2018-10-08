@@ -84,7 +84,7 @@ public class RegionFileCache {
      */
     public RegionFile getRegionFile(int chunkX, int chunkZ) {
         if (!regionDir.isDirectory() && !regionDir.mkdirs()) {
-            GlowServer.logger.warning("Failed to create directory: " + regionDir);
+            GlowServer.logger.warn("Failed to create directory: {}", regionDir);
         }
         return regions.getUnchecked(
                 new File(regionDir, "r." + (chunkX >> 5) + "." + (chunkZ >> 5) + extension));

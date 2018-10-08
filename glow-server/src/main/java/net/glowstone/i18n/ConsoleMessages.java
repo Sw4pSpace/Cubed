@@ -1,89 +1,90 @@
 package net.glowstone.i18n;
 
-import java.util.logging.Level;
+
+import org.slf4j.event.Level;
 
 public interface ConsoleMessages {
     interface Error {
         interface Biome {
             LoggableLocalizedString UNKNOWN = new LoggableLocalizedStringImpl(
-                    "console.biome.unknown", Level.SEVERE
+                    "console.biome.unknown", Level.ERROR
             );
         }
 
         interface BlockEntity {
             LoggableLocalizedString LOAD_FAILED = new LoggableLocalizedStringImpl(
-                    "console.block-entity.load-failed", Level.SEVERE
+                    "console.block-entity.load-failed", Level.ERROR
             );
 
             LoggableLocalizedString SAVE_FAILED = new LoggableLocalizedStringImpl(
-                    "console.block-entity.save-failed", Level.SEVERE
+                    "console.block-entity.save-failed", Level.ERROR
             );
         }
 
         interface Chunk {
             LoggableLocalizedString GEN_FAILED = new LoggableLocalizedStringImpl(
-                    "console.chunk.gen-failed", Level.SEVERE);
+                    "console.chunk.gen-failed", Level.ERROR);
 
             LoggableLocalizedString LOAD_FAILED = new LoggableLocalizedStringImpl(
-                    "console.chunk.load-failed", Level.SEVERE);
+                    "console.chunk.load-failed", Level.ERROR);
 
             LoggableLocalizedString POP_FAILED = new LoggableLocalizedStringImpl(
-                    "console.chunk.pop-failed", Level.SEVERE);
+                    "console.chunk.pop-failed", Level.ERROR);
 
             LoggableLocalizedString REGEN_FAILED = new LoggableLocalizedStringImpl(
-                    "console.chunk.regen-failed", Level.SEVERE);
+                    "console.chunk.regen-failed", Level.ERROR);
 
             LoggableLocalizedString SAVE_FAILED = new LoggableLocalizedStringImpl(
-                    "console.chunk.save-failed", Level.SEVERE);
+                    "console.chunk.save-failed", Level.ERROR);
         }
 
         LoggableLocalizedString CLASSPATH = new LoggableLocalizedStringImpl(
-                "console.classpath.load-failed", Level.WARNING
+                "console.classpath.load-failed", Level.WARN
         );
 
         interface Function {
             LoggableLocalizedString LOAD_FAILED = new LoggableLocalizedStringImpl(
-                    "console.function.load-failed", Level.SEVERE
+                    "console.function.load-failed", Level.ERROR
             );
         }
 
         interface Import {
             LoggableLocalizedString NO_MESSAGE = new LoggableLocalizedStringImpl(
-                    "console.import.failed.no-message", Level.WARNING
+                    "console.import.failed.no-message", Level.WARN
             );
 
             LoggableLocalizedString WITH_MESSAGE = new LoggableLocalizedStringImpl(
-                    "console.import.failed.with-message", Level.WARNING
+                    "console.import.failed.with-message", Level.WARN
             );
         }
 
         interface Io {
 
             LoggableLocalizedString MKDIR = new LoggableLocalizedStringImpl(
-                    "console.io.mkdir-failed", Level.SEVERE
+                    "console.io.mkdir-failed", Level.ERROR
             );
 
             LoggableLocalizedString PLAYER_READ = new LoggableLocalizedStringImpl(
-                    "console.io.player-read-failed", Level.SEVERE);
+                    "console.io.player-read-failed", Level.ERROR);
 
             LoggableLocalizedString PLAYER_READ_UNKNOWN = new LoggableLocalizedStringImpl(
-                    "console.io.player-read-failed-unknown", Level.SEVERE);
+                    "console.io.player-read-failed-unknown", Level.ERROR);
 
             LoggableLocalizedString PLAYER_WRITE = new LoggableLocalizedStringImpl(
-                    "console.io.player-write-failed", Level.SEVERE);
+                    "console.io.player-write-failed", Level.ERROR);
 
             LoggableLocalizedString WORLD_READ = new LoggableLocalizedStringImpl(
-                    "console.io.world-read-failed", Level.SEVERE
+                    "console.io.world-read-failed", Level.ERROR
             );
         }
 
         LoggableLocalizedString LOOTING_MANAGER = new LoggableLocalizedStringImpl(
-                "console.looting-manager.load-failed", Level.SEVERE
+                "console.looting-manager.load-failed", Level.ERROR
         );
 
         interface Permission {
             LoggableLocalizedString INVALID = new LoggableLocalizedStringImpl(
-                    "console.permission.invalid", Level.SEVERE
+                    "console.permission.invalid", Level.ERROR
             ) {
                 @Override
                 public String get(Object... args) {
@@ -96,65 +97,65 @@ public interface ConsoleMessages {
 
         interface Plugin {
             LoggableLocalizedString LOADING = new LoggableLocalizedStringImpl(
-                    "console.plugin.load-failed", Level.SEVERE
+                    "console.plugin.load-failed", Level.ERROR
             );
 
             LoggableLocalizedString MKDIR = new LoggableLocalizedStringImpl(
-                    "console.plugin.mkdir-failed", Level.SEVERE
+                    "console.plugin.mkdir-failed", Level.ERROR
             );
         }
 
         interface Profile {
             LoggableLocalizedString INTERRUPTED = new LoggableLocalizedStringImpl(
-                    "console.profile.interrupted", Level.SEVERE
+                    "console.profile.interrupted", Level.ERROR
             );
         }
 
         interface Rcon {
             LoggableLocalizedString BIND_INTERRUPTED = new LoggableLocalizedStringImpl(
-                    "console.rcon.bind-interrupted", Level.SEVERE
+                    "console.rcon.bind-interrupted", Level.ERROR
             );
         }
 
         LoggableLocalizedString RELOAD = new LoggableLocalizedStringImpl(
-                "console.reload-failed", Level.SEVERE
+                "console.reload-failed", Level.ERROR
         );
 
         LoggableLocalizedString STARTUP = new LoggableLocalizedStringImpl(
-                "console.startup-failed", Level.SEVERE
+                "console.startup-failed", Level.ERROR
         );
 
         interface Structure {
             LoggableLocalizedString LOAD_FAILED = new LoggableLocalizedStringImpl(
-                    "console.structure.load-failed", Level.SEVERE
+                    "console.structure.load-failed", Level.ERROR
             );
 
             LoggableLocalizedString SAVE_FAILED = new LoggableLocalizedStringImpl(
-                    "console.structure.save-failed", Level.SEVERE
+                    "console.structure.save-failed", Level.ERROR
             );
 
             LoggableLocalizedString NO_DATA = new LoggableLocalizedStringImpl(
-                    "console.structure.no-data", Level.SEVERE
+                    "console.structure.no-data", Level.ERROR
             );
 
             LoggableLocalizedString UNKNOWN_PIECE_TYPE = new LoggableLocalizedStringImpl(
-                    "console.structure.unknown-piece-type", Level.SEVERE
+                    "console.structure.unknown-piece-type", Level.ERROR
             );
         }
 
         interface Uuid {
             LoggableLocalizedString INTERRUPTED = new LoggableLocalizedStringImpl(
-                    "console.uuid.interrupted", Level.SEVERE
+                    "console.uuid.interrupted", Level.ERROR
             );
         }
 
         interface Net {
             interface Crypt {
                 LoggableLocalizedString INIT_FAILED = new LoggableLocalizedStringImpl(
-                        "console.net.crypt.init-failed", Level.SEVERE);
+                        "console.net.crypt.init-failed", Level.ERROR);
 
                 LoggableLocalizedString RSA_INIT_FAILED = new LoggableLocalizedStringImpl(
-                        "glowstone.kick.crypt.rsa-init-failed", Level.SEVERE);
+                        "glowstone.kick.crypt.rsa-init-failed", Level.ERROR);
             }
         }
     }
@@ -296,207 +297,207 @@ public interface ConsoleMessages {
         interface Block {
             interface Chest {
                 LoggableLocalizedString FACING = new LoggableLocalizedStringImpl(
-                        "console.block.chest.facing", Level.WARNING);
+                        "console.block.chest.facing", Level.WARN);
 
                 LoggableLocalizedString INTERACT_WRONG_CLASS = new LoggableLocalizedStringImpl(
-                        "console.block.chest.interact-wrong-class", Level.WARNING);
+                        "console.block.chest.interact-wrong-class", Level.WARN);
 
                 LoggableLocalizedString TRIPLE_ALREADY = new LoggableLocalizedStringImpl(
-                        "console.block.chest.triple-already", Level.WARNING);
+                        "console.block.chest.triple-already", Level.WARN);
 
                 LoggableLocalizedString TRIPLE_END = new LoggableLocalizedStringImpl(
-                        "console.block.chest.triple-end", Level.WARNING);
+                        "console.block.chest.triple-end", Level.WARN);
 
                 LoggableLocalizedString TRIPLE_MIDDLE = new LoggableLocalizedStringImpl(
-                        "console.block.chest.triple-middle", Level.WARNING);
+                        "console.block.chest.triple-middle", Level.WARN);
             }
 
             interface DoubleSlab {
                 LoggableLocalizedString WRONG_MATERIAL = new LoggableLocalizedStringImpl(
-                        "console.block.doubleslab.wrong-material", Level.WARNING);
+                        "console.block.doubleslab.wrong-material", Level.WARN);
             }
 
             LoggableLocalizedString WRONG_MATERIAL_DATA = new LoggableLocalizedStringImpl(
-                    "console.block.wrong-material-data", Level.WARNING);
+                    "console.block.wrong-material-data", Level.WARN);
         }
 
         interface BlockEntity {
             LoggableLocalizedString UNKNOWN = new LoggableLocalizedStringImpl(
-                    "console.block-entity.unknown", Level.WARNING
+                    "console.block-entity.unknown", Level.WARN
             );
         }
 
         interface Chunk {
             LoggableLocalizedString SECTION_DUP = new LoggableLocalizedStringImpl(
-                    "console.chunk.section-dup", Level.WARNING
+                    "console.chunk.section-dup", Level.WARN
             );
 
             LoggableLocalizedString SECTION_OOB = new LoggableLocalizedStringImpl(
-                    "console.chunk.section-oob", Level.WARNING
+                    "console.chunk.section-oob", Level.WARN
             );
 
             LoggableLocalizedString UNKNOWN_BLOCK_TO_TICK = new LoggableLocalizedStringImpl(
-                    "console.chunk.unknown-block-to-tick", Level.WARNING
+                    "console.chunk.unknown-block-to-tick", Level.WARN
             );
             LoggableLocalizedString UNLOAD_FAILED = new LoggableLocalizedStringImpl(
-                    "console.chunk.unload-failed", Level.WARNING);
+                    "console.chunk.unload-failed", Level.WARN);
         }
 
         interface Entity {
             LoggableLocalizedString LOAD_FAILED = new LoggableLocalizedStringImpl(
-                    "console.entity.load-failed", Level.WARNING
+                    "console.entity.load-failed", Level.WARN
             );
 
             LoggableLocalizedString PARTICLE_INVALID = new LoggableLocalizedStringImpl(
-                    "console.entity.particle-invalid", Level.WARNING
+                    "console.entity.particle-invalid", Level.WARN
             );
 
             LoggableLocalizedString SAVE_FAILED = new LoggableLocalizedStringImpl(
-                    "console.entity.save-failed", Level.WARNING
+                    "console.entity.save-failed", Level.WARN
             );
 
             LoggableLocalizedString UNKNOWN = new LoggableLocalizedStringImpl(
-                    "console.entity.unknown", Level.WARNING
+                    "console.entity.unknown", Level.WARN
             );
         }
 
         interface Event {
             LoggableLocalizedString INTERRUPTED = new LoggableLocalizedStringImpl(
-                    "console.event.interrupted", Level.WARNING
+                    "console.event.interrupted", Level.WARN
             );
 
             LoggableLocalizedString SHUTDOWN = new LoggableLocalizedStringImpl(
-                    "console.event.shutdown", Level.WARNING
+                    "console.event.shutdown", Level.WARN
             );
         }
 
         interface Icon {
             LoggableLocalizedString LOAD_FAILED_IMPORT = new LoggableLocalizedStringImpl(
-                    "console.icon.load-failed.import", Level.WARNING
+                    "console.icon.load-failed.import", Level.WARN
             );
 
             LoggableLocalizedString LOAD_FAILED = new LoggableLocalizedStringImpl(
-                    "console.icon.load-failed", Level.WARNING
+                    "console.icon.load-failed", Level.WARN
             );
         }
 
         interface Io {
             LoggableLocalizedString JSON_STAT_UNKNOWN = new LoggableLocalizedStringImpl(
-                    "console.io.json.stat-unknown", Level.WARNING
+                    "console.io.json.stat-unknown", Level.WARN
             );
 
             LoggableLocalizedString MKDIR_FAILED = new LoggableLocalizedStringImpl(
-                    "console.io.mkdir-failed", Level.WARNING
+                    "console.io.mkdir-failed", Level.WARN
             );
 
             LoggableLocalizedString NO_WORLD_DATA_TAG = new LoggableLocalizedStringImpl(
-                    "console.io.no-world-data-tag", Level.WARNING
+                    "console.io.no-world-data-tag", Level.WARN
             );
 
             LoggableLocalizedString REMOVING_SINGLE_PLAYER = new LoggableLocalizedStringImpl(
-                    "console.io.removing-single-player", Level.WARNING
+                    "console.io.removing-single-player", Level.WARN
             );
         }
 
         interface Net {
             LoggableLocalizedString MESSAGE_TOO_LONG = new LoggableLocalizedStringImpl(
-                    "console.net.message-too-long", Level.WARNING
+                    "console.net.message-too-long", Level.WARN
             );
 
             LoggableLocalizedString CRAFTING_BOOK_UNSUPPORTED = new LoggableLocalizedStringImpl(
-                    "console.net.crafting-book-unsupported", Level.WARNING);
+                    "console.net.crafting-book-unsupported", Level.WARN);
 
             LoggableLocalizedString CRAFTING_RECIPE_UNSUPPORTED = new LoggableLocalizedStringImpl(
-                    "console.net.crafting-recipe-unsupported", Level.WARNING);
+                    "console.net.crafting-recipe-unsupported", Level.WARN);
         }
 
         LoggableLocalizedString OFFLINE = new LoggableLocalizedStringImpl(
-                "console.offline", Level.WARNING
+                "console.offline", Level.WARN
         );
 
         interface Option {
             LoggableLocalizedString INVALID = new LoggableLocalizedStringImpl(
-                    "console.option.invalid", Level.WARNING
+                    "console.option.invalid", Level.WARN
             );
 
             LoggableLocalizedString NO_VALUE = new LoggableLocalizedStringImpl(
-                    "console.option.no-value", Level.WARNING
+                    "console.option.no-value", Level.WARN
             );
         }
 
         interface Permission {
             LoggableLocalizedString DUPLICATE = new LoggableLocalizedStringImpl(
-                    "console.permission.duplicate", Level.WARNING
+                    "console.permission.duplicate", Level.WARN
             );
         }
 
         interface Plugin {
             LoggableLocalizedString NO_SPONGE = new LoggableLocalizedStringImpl(
-                    "console.plugin.no-sponge", Level.WARNING
+                    "console.plugin.no-sponge", Level.WARN
             );
 
             LoggableLocalizedString UNRECOGNIZED = new LoggableLocalizedStringImpl(
-                    "console.plugin.unrecognized", Level.WARNING
+                    "console.plugin.unrecognized", Level.WARN
             );
 
             LoggableLocalizedString MALFORMED_URL = new LoggableLocalizedStringImpl(
-                    "console.plugin.malformed-url", Level.WARNING
+                    "console.plugin.malformed-url", Level.WARN
             );
 
             LoggableLocalizedString LOAD_FAILED = new LoggableLocalizedStringImpl(
-                    "console.plugin.load-failed.type-detector", Level.WARNING
+                    "console.plugin.load-failed.type-detector", Level.WARN
             );
 
             LoggableLocalizedString BUKKIT2SPONGE = new LoggableLocalizedStringImpl(
-                    "console.plugin.no-sponge.bukkit2sponge", Level.WARNING
+                    "console.plugin.no-sponge.bukkit2sponge", Level.WARN
             );
 
             LoggableLocalizedString PERMISSION_DUPLICATE = new LoggableLocalizedStringImpl(
-                    "console.plugin.permission.duplicate", Level.WARNING
+                    "console.plugin.permission.duplicate", Level.WARN
             );
 
             LoggableLocalizedString UNSUPPORTED = new LoggableLocalizedStringImpl(
-                    "console.plugin.unsupported", Level.WARNING
+                    "console.plugin.unsupported", Level.WARN
             );
 
             LoggableLocalizedString UNSUPPORTED_CANARY = new LoggableLocalizedStringImpl(
-                    "console.plugin.unsupported.canary", Level.WARNING
+                    "console.plugin.unsupported.canary", Level.WARN
             );
 
             LoggableLocalizedString UNSUPPORTED_FORGE = new LoggableLocalizedStringImpl(
-                    "console.plugin.unsupported.forge", Level.WARNING
+                    "console.plugin.unsupported.forge", Level.WARN
             );
 
             LoggableLocalizedString UNSUPPORTED_OTHER = new LoggableLocalizedStringImpl(
-                    "console.plugin.unsupported.other", Level.WARNING
+                    "console.plugin.unsupported.other", Level.WARN
             );
 
             LoggableLocalizedString UNSUPPORTED_SPONGE = new LoggableLocalizedStringImpl(
-                    "console.plugin.unsupported.sponge", Level.WARNING
+                    "console.plugin.unsupported.sponge", Level.WARN
             );
         }
 
         interface Profile {
             LoggableLocalizedString TIMEOUT = new LoggableLocalizedStringImpl(
-                    "console.profile.timeout", Level.WARNING
+                    "console.profile.timeout", Level.WARN
             );
         }
 
         interface Recipe {
             LoggableLocalizedString NO_DEFAULTS = new LoggableLocalizedStringImpl(
-                    "console.recipe.no-defaults", Level.WARNING
+                    "console.recipe.no-defaults", Level.WARN
             );
         }
 
         interface Uuid {
             LoggableLocalizedString TIMEOUT = new LoggableLocalizedStringImpl(
-                    "console.uuid.timeout", Level.WARNING
+                    "console.uuid.timeout", Level.WARN
             );
         }
 
         interface WorldGen {
             LoggableLocalizedString DISABLED = new LoggableLocalizedStringImpl(
-                    "console.worldgen.disabled", Level.WARNING
+                    "console.worldgen.disabled", Level.WARN
             );
         }
     }

@@ -48,7 +48,7 @@ public class StructurePopulator extends BlockPopulator {
                         if (structure.shouldGenerate(random)) {
                             structure.setDirty(true);
                             structures.put(key, structure);
-                            GlowServer.logger.finer("structure in chunk " + x + "," + z);
+                            GlowServer.logger.trace("structure in chunk " + x + "," + z);
                             placed = true;
                             break;
                         }

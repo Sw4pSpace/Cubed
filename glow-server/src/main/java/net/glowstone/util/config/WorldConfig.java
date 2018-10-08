@@ -66,7 +66,7 @@ public final class WorldConfig implements DynamicallyTypedMapWithDoubles<WorldCo
         try {
             config.save(configFile);
         } catch (IOException e) {
-            GlowServer.logger.log(Level.SEVERE, "Failed to write config: " + configFile, e);
+            GlowServer.logger.error("Failed to write config: " + configFile, e);
         }
     }
 
@@ -146,7 +146,7 @@ public final class WorldConfig implements DynamicallyTypedMapWithDoubles<WorldCo
 
             // create config directory
             if (!directory.isDirectory() && !directory.mkdirs()) {
-                GlowServer.logger.severe("Cannot create directory: " + directory);
+                GlowServer.logger.error("Cannot create directory: " + directory);
                 return;
             }
 
@@ -161,7 +161,7 @@ public final class WorldConfig implements DynamicallyTypedMapWithDoubles<WorldCo
             try {
                 config.load(configFile);
             } catch (IOException e) {
-                GlowServer.logger.log(Level.SEVERE, "Failed to read config: " + configFile, e);
+                GlowServer.logger.error("Failed to read config: " + configFile, e);
             } catch (InvalidConfigurationException e) {
                 report(configFile, e);
             }
@@ -182,12 +182,11 @@ public final class WorldConfig implements DynamicallyTypedMapWithDoubles<WorldCo
 
     private void report(File file, InvalidConfigurationException e) {
         if (e.getCause() instanceof YAMLException) {
-            GlowServer.logger.severe("Config file " + file + " isn't valid! " + e.getCause());
+            GlowServer.logger.error("Config file {} isn't valid! {}", file, e.getCause());
         } else if (e.getCause() == null || e.getCause() instanceof ClassCastException) {
-            GlowServer.logger.severe("Config file " + file + " isn't valid!");
+            GlowServer.logger.error("Config file {} isn't valid!", file);
         } else {
-            GlowServer.logger
-                    .log(Level.SEVERE, "Cannot load " + file + ": " + e.getCause().getClass(), e);
+            GlowServer.logger.error("Cannot load " + file + ": " + e.getCause().getClass(), e);
         }
     }
 

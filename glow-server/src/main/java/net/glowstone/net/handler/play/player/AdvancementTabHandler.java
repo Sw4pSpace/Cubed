@@ -11,10 +11,9 @@ public class AdvancementTabHandler implements MessageHandler<GlowSession, Advanc
     @Override
     public void handle(GlowSession session, AdvancementTabMessage message) {
         if (message.getAction() == AdvancementTabMessage.ACTION_CLOSE) {
-            GlowServer.logger.log(Level.FINE, "Received AdvancementTabHandler (close)");
+            GlowServer.logger.trace("Received AdvancementTabHandler (close)");
         } else {
-            GlowServer.logger.log(Level.FINE,
-                "Received AdvancementTabHandler (open:" + message.getTabId() + ")");
+            GlowServer.logger.trace("Received AdvancementTabHandler (open:{})", message.getTabId());
         }
     }
 }

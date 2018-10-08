@@ -80,8 +80,7 @@ public final class LibraryManager {
      */
     public void run() {
         if (!directory.isDirectory() && !directory.mkdirs()) {
-            GlowServer.logger
-                    .log(Level.SEVERE, "Could not create libraries directory: " + directory);
+            GlowServer.logger.error("Could not create libraries directory: {}", directory);
         }
 
         for (Library library : libraries) {
@@ -94,7 +93,7 @@ public final class LibraryManager {
                 downloaderService.shutdownNow();
             }
         } catch (InterruptedException e) {
-            GlowServer.logger.log(Level.SEVERE, "Library Manager thread interrupted: ", e);
+            GlowServer.logger.error("Library Manager thread interrupted: ", e);
         }
     }
 
@@ -150,7 +149,7 @@ public final class LibraryManager {
                         if (validateChecksum && library.getChecksumType() != null
                                 && library.getChecksumValue() != null
                                 && !checksum(file, library)) {
-                            GlowServer.logger.severe("The checksum for the library '" + getLibrary()
+                            GlowServer.logger.error("The checksum for the library '" + getLibrary()
                                     + "' does not match. "
                                     + (attempts == maxDownloadAttempts
                                             ? "Restart the server to attempt downloading it again."
@@ -165,30 +164,23 @@ public final class LibraryManager {
                         // everything's fine
                         break;
                     } catch (IOException e) {
-                        GlowServer.logger.log(Level.WARNING,
-                                "Failed to download: " + library.toString(), e);
+                        GlowServer.logger.warn("Failed to download: " + library.toString(), e);
                         file.delete();
                         if (attempts == maxDownloadAttempts) {
-                            GlowServer.logger.warning("Restart the server to attempt downloading '"
-                                    + getLibrary() + "' again.");
+                            GlowServer.logger.warn("Restart the server to attempt downloading '{}' again.", getLibrary());
                             return;
                         }
-                        GlowServer.logger
-                                .warning("Attempting download of '" + getLibrary() + "' again ("
-                                        + (attempts + 1) + "/" + maxDownloadAttempts + ")");
+                        GlowServer.logger.warn("Attempting download of '{}' again ({}/{})", getLibrary(), (attempts + 1), maxDownloadAttempts);
                     }
                 }
             } else if (validateChecksum && library.getChecksumType() != null
                     && library.getChecksumValue() != null
                     && !checksum(file, library)) {
                 // The file is already downloaded, but validate the checksum as a warning only
-                GlowServer.logger.warning("The checksum for the library '" + getLibrary()
-                        + "' does not match. "
-                        + "Remove the library and restart the server to download it again.");
-                GlowServer.logger
-                        .warning("Additionally, you can disable this warning in the server "
-                                + "configuration, under '"
-                                + ServerConfig.Key.LIBRARY_CHECKSUM_VALIDATION.getPath() + "'.");
+                GlowServer.logger.warn("The checksum for the library '{}' does not match. "
+                        + "Remove the library and restart the server to download it again.", getLibrary());
+                GlowServer.logger.warn("Additionally, you can disable this warning in the server "
+                                + "configuration, under '{}'.", ServerConfig.Key.LIBRARY_CHECKSUM_VALIDATION.getPath());
             }
 
             // hack it onto the classpath
@@ -203,8 +195,7 @@ public final class LibraryManager {
                     method.invoke(ClassLoader.getSystemClassLoader(), file.toURI().toURL());
                 }
             } catch (Exception e) {
-                GlowServer.logger.log(Level.WARNING,
-                        "Failed to add to classpath: " + library.toString(), e);
+                GlowServer.logger.warn("Failed to add to classpath: " + library.toString(), e);
             }
         }
 
@@ -246,8 +237,7 @@ public final class LibraryManager {
             try {
                 digest = Files.hash(file, algorithm.getFunction()).toString();
             } catch (IOException ex) {
-                GlowServer.logger.log(Level.SEVERE,
-                        "Failed to compute digest for '" + file.getName() + "'", ex);
+                GlowServer.logger.error("Failed to compute digest for '" + file.getName() + "'", ex);
                 return false;
             }
             return digest.equals(checksum);

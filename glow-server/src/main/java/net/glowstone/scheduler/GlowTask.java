@@ -157,8 +157,12 @@ public class GlowTask extends FutureTask<Void> implements BukkitTask, BukkitWork
         try {
             get();
         } catch (ExecutionException ex) {
-            Logger log = owner == null ? GlowServer.logger : owner.getLogger();
-            log.log(Level.SEVERE, "Error while executing " + this, ex.getCause());
+            String msg = "Error while executing " + this;
+            if(owner != null) {
+                owner.getLogger().log(Level.SEVERE, msg, ex.getCause());
+            }else{
+                GlowServer.logger.error(msg, ex.getCause());
+            }
         } catch (InterruptedException e) {
             // Task is already done, see the fact that we're in done() method
         }

@@ -167,7 +167,7 @@ public class GlowPlayerProfile implements PlayerProfile {
         try {
             uuid = UuidUtils.fromFlatString(id);
         } catch (IllegalArgumentException ex) {
-            GlowServer.logger.log(Level.SEVERE, "Returned authentication UUID invalid: " + id);
+            GlowServer.logger.error("Returned authentication UUID invalid: " + id);
             return null;
         }
 

@@ -60,7 +60,7 @@ public abstract class JsonListFile {
                     entries.add(readEntry(map));
                 }
             } catch (Exception ex) {
-                GlowServer.logger.log(Level.SEVERE, "Error reading from: " + file, ex);
+                GlowServer.logger.error("Error reading from: " + file, ex);
             }
         } else {
             //importLegacy();
@@ -85,7 +85,7 @@ public abstract class JsonListFile {
         try (Writer writer = new FileWriter(file)) {
             array.writeJSONString(writer);
         } catch (Exception ex) {
-            GlowServer.logger.log(Level.SEVERE, "Error writing to: " + file, ex);
+            GlowServer.logger.error("Error writing to: " + file, ex);
         }
     }
 

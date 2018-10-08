@@ -1448,9 +1448,9 @@ public class GlowWorld implements World {
                                 .toArray(new Message[spawnMessage.size()])));
             }
         } catch (NoSuchMethodError | IllegalAccessError e) {
-            GlowServer.logger.log(Level.WARNING, "Invalid entity spawn: ", e);
+            GlowServer.logger.warn("Invalid entity spawn: ", e);
         } catch (Throwable t) {
-            GlowServer.logger.log(Level.SEVERE, "Unable to spawn entity: ", t);
+            GlowServer.logger.error("Unable to spawn entity: ", t);
         }
 
         if (entity != null) {

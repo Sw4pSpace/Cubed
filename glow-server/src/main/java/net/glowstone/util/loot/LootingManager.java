@@ -80,8 +80,7 @@ public class LootingManager {
         try {
             InputStream in = LootingManager.class.getClassLoader().getResourceAsStream(location);
             if (in == null) {
-                GlowServer.logger.warning(
-                    "Could not find default entity loot table '" + location + "' on classpath");
+                GlowServer.logger.warn("Could not find default entity loot table '{}' on classpath", location);
                 return;
             }
             JSONObject json = (JSONObject) new JSONParser().parse(new InputStreamReader(in));

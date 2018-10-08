@@ -145,9 +145,7 @@ public class RegionFile {
             if (initialLength < 2 * SECTOR_BYTES) {
                 // if the file size is under 8KB, grow it
                 sizeDelta.set(2 * SECTOR_BYTES - initialLength);
-                GlowServer.logger.warning(
-                        "Region \"" + path + "\" under 8K: " + initialLength + " increasing by " + (
-                                2 * SECTOR_BYTES - initialLength));
+                GlowServer.logger.warn("Region \"{}\" under 8K: {} increasing by {}", path, initialLength, (2 * SECTOR_BYTES - initialLength));
 
                 for (long i = 0; i < sizeDelta.get(); ++i) {
                     file.write(0);
@@ -155,10 +153,7 @@ public class RegionFile {
             } else if ((initialLength & (SECTOR_BYTES - 1)) != 0) {
                 // if the file size is not a multiple of 4KB, grow it
                 sizeDelta.set(initialLength & (SECTOR_BYTES - 1));
-                GlowServer.logger.warning(
-                        "Region \"" + path + "\" not aligned: " + initialLength + " increasing by "
-                                + (
-                                SECTOR_BYTES - (initialLength & (SECTOR_BYTES - 1))));
+                GlowServer.logger.warn("Region \"{}\" not aligned: {} increasing by {}", path, initialLength, (SECTOR_BYTES - (initialLength & (SECTOR_BYTES - 1))));
 
                 for (long i = 0; i < sizeDelta.get(); ++i) {
                     file.write(0);
@@ -198,10 +193,7 @@ public class RegionFile {
                     sectorsUsed.set(startSector + sectorNum);
                 }
             } else if (offset != 0) {
-                GlowServer.logger.warning(
-                        "Region \"" + path + "\": offsets[" + i + "] = " + offset + " -> "
-                                + startSector
-                                + "," + numSectors + " does not fit");
+                GlowServer.logger.warn("Region \"{]\": offsets[{}] = {} -> {},{} does not fit", path, i, offset, startSector, numSectors);
             }
         }
         // read timestamps from timestamp table

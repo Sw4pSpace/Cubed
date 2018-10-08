@@ -53,7 +53,7 @@ public class VehicleMoveHandler implements MessageHandler<GlowSession, VehicleMo
                 session.getPlayer().kickPlayer("You moved too quickly :( (Hacking?)");
                 return;
             } else if (distance > 100) {
-                GlowServer.logger.warning(session.getPlayer().getName() + " moved too quickly!");
+                GlowServer.logger.warn("{} moved too quickly!", session.getPlayer().getName());
             }
         }
 

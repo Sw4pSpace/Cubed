@@ -41,7 +41,7 @@ public class FishingRewardManager {
     private void registerBuiltins(ConfigurationSection mainSection) {
         ConfigurationSection valuesSection = mainSection.getConfigurationSection("rewards");
         if (valuesSection == null) {
-            GlowServer.logger.warning("Invalid fishingRewards.yml: no 'rewards' section");
+            GlowServer.logger.warn("Invalid fishingRewards.yml: no 'rewards' section");
             return;
         }
         Set<String> categories = valuesSection.getKeys(false);

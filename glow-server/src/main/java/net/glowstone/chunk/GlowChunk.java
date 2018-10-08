@@ -271,16 +271,11 @@ public class GlowChunk implements Chunk {
      */
     public void initializeSections(ChunkSection[] initSections) {
         if (isLoaded()) {
-            GlowServer.logger.log(Level.SEVERE,
-                    "Tried to initialize already loaded chunk (" + x + "," + z + ")",
-                    new Throwable());
+            GlowServer.logger.error("Tried to initialize already loaded chunk (" + x + "," + z + ")", new Throwable());
             return;
         }
         if (initSections.length != SEC_COUNT) {
-            GlowServer.logger.log(Level.WARNING,
-                    "Got an unexpected section length - wanted " + SEC_COUNT + ", but length was "
-                            + initSections.length,
-                    new Throwable());
+            GlowServer.logger.warn("Got an unexpected section length - wanted " + SEC_COUNT + ", but length was " + initSections.length, new Throwable());
         }
         //GlowServer.logger.log(Level.INFO, "Initializing chunk ({0},{1})", new Object[]{x, z});
 
@@ -374,8 +369,7 @@ public class GlowChunk implements Chunk {
                     blockEntities.put(coordinateToIndex(cx, cz, cy), entity);
                     return entity;
                 } catch (Exception ex) {
-                    GlowServer.logger
-                            .log(Level.SEVERE, "Unable to initialize block entity for " + type, ex);
+                    GlowServer.logger.error("Unable to initialize block entity for " + type, ex);
                     return null;
                 }
             default:

@@ -221,7 +221,7 @@ public final class GlowBufUtils {
         try (NbtOutputStream str = new NbtOutputStream(out, false)) {
             str.writeTag(data);
         } catch (IOException e) {
-            GlowServer.logger.log(Level.WARNING, "Error serializing NBT: " + data, e);
+            GlowServer.logger.warn("Error serializing NBT: " + data, e);
             return;
         }
 
