@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Table(name = "ops")
 @NoArgsConstructor
 @ToString(of = { "id" , "name", "uuid" })
-public class Op {
+public class OpPlayer {
 
     @Id
     @Column(columnDefinition = "serial")

@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 
-import static net.glowstone.webservices.repositories.criteria.BannedPlayerCriteria.*;
-import static net.glowstone.webservices.repositories.criteria.BannedPlayerCriteria.withReason;
-import static net.glowstone.webservices.repositories.criteria.BannedPlayerCriteria.withSource;
+import static net.glowstone.webservices.repositories.specification.BannedPlayerSpecification.*;
 import static org.springframework.data.jpa.domain.Specifications.where;
 
 @RestController
