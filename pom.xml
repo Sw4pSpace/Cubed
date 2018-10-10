@@ -2,17 +2,27 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>9</version>
+    <!-- Fix for maven warning -->
+    <relativePath></relativePath>
+  </parent>
+
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.sw4pspace</groupId>
   <artifactId>cubed</artifactId>
   <packaging>pom</packaging>
   <version>2018.10.0-SNAPSHOT</version>
+
   <modules>
     <module>cubed-server</module>
     <module>cubed-webservices</module>
     <module>cubed-api</module>
     <module>cubed-db</module>
   </modules>
+
   <name>Cubed</name>
   <url>https://www.cubedserver.net</url>
   <description>A fast, customizable and compatible open source Minecraft server.</description>
@@ -47,37 +57,25 @@
 
     <!-- Glow Database Properties -->
     <liquibase.version>3.5.3</liquibase.version>
-    <db.url>localhost:5432/glowstone</db.url>
-    <db.name>glowstone</db.name>
+    <db.url>localhost:5432/cubed</db.url>
+    <db.name>cubed</db.name>
     <db.username>postgres</db.username>
     <db.password>postgres</db.password>
 
   </properties>
 
   <repositories>
-    <!-- Sw4Space Repo's-->
     <repository>
-      <id>sw4pspace-internal</id>
-      <url>http://nexus.sw4pspace.net/repository/public/</url>
+      <id>glowstone-snapshots</id>
+      <url>https://repo.glowstone.net/content/groups/public</url>
     </repository>
     <repository>
-      <id>sw4pspace-snapshots</id>
-      <url>http://nexus.sw4pspace.net/repository/snapshots/</url>
-    </repository>
-    <!-- Spigot/Bungeecord-->
-    <repository>
-      <id>md_5-releases</id>
-      <url>https://repo.md-5.net/content/repositories/releases/</url>
-    </repository>
-    <!-- Aikar... Wish we could remove -->
-    <repository>
-      <id>aikar</id>
-      <url>https://repo.aikar.co/content/groups/aikar/</url>
+      <id>sw4pspace</id>
+      <url>http://nexus.sw4pspace.net/reposistory/public</url>
     </repository>
   </repositories>
 
   <distributionManagement>
-    <!-- Sw4Space Repo's -->
     <repository>
       <id>sw4pspace-upstream</id>
       <url>http://nexus.sw4pspace.net/nexus/content/repositories/releases/</url>

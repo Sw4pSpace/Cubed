@@ -134,7 +134,7 @@
     </dependencies>
 
     <build>
-        <finalName>glowstone</finalName>
+        <finalName>cubedserver</finalName>
 
         <directory>../target</directory>
 
