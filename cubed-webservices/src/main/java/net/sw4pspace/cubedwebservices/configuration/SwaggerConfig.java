@@ -1,4 +1,4 @@
-package net.cubed.webservices.configuration;
+package net.sw4pspace.cubedwebservices.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

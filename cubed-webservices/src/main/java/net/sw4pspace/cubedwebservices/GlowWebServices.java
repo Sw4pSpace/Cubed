@@ -1,4 +1,4 @@
-package net.cubed.webservices;
+package net.sw4pspace.cubedwebservices;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

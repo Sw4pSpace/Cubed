@@ -1,10 +1,10 @@
-package net.cubed.webservices.controller;
+package net.sw4pspace.cubedwebservices.controller;
 
 import io.swagger.annotations.ApiOperation;
-import net.cubed.webservices.dto.WhiteListPlayer;
-import net.cubed.webservices.repositories.WhiteListRepository;
-import net.cubed.webservices.repositories.criteria.WhiteListPlayerCriteria;
-import net.cubed.webservices.repositories.specification.WhiteListPlayerSpecification;
+import net.sw4pspace.cubedwebservices.dto.WhiteListPlayer;
+import net.sw4pspace.cubedwebservices.repositories.WhiteListRepository;
+import net.sw4pspace.cubedwebservices.repositories.criteria.WhiteListPlayerCriteria;
+import net.sw4pspace.cubedwebservices.repositories.specification.WhiteListPlayerSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

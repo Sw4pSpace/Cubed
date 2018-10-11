@@ -1,6 +1,6 @@
-package net.cubed.webservices.repositories.specification;
+package net.sw4pspace.cubedwebservices.repositories.specification;
 
-import net.cubed.webservices.dto.BannedPlayer;
+import net.sw4pspace.cubedwebservices.dto.BannedPlayer;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Date;

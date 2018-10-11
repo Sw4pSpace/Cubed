@@ -1,10 +1,10 @@
-package net.cubed.webservices.controller;
+package net.sw4pspace.cubedwebservices.controller;
 
 import io.swagger.annotations.ApiOperation;
-import net.cubed.webservices.repositories.BannedRepository;
-import net.cubed.webservices.repositories.specification.BannedPlayerSpecification;
-import net.cubed.webservices.dto.BannedPlayer;
-import net.cubed.webservices.repositories.criteria.BannedPlayerCriteria;
+import net.sw4pspace.cubedwebservices.repositories.BannedRepository;
+import net.sw4pspace.cubedwebservices.repositories.specification.BannedPlayerSpecification;
+import net.sw4pspace.cubedwebservices.dto.BannedPlayer;
+import net.sw4pspace.cubedwebservices.repositories.criteria.BannedPlayerCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

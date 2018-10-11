@@ -1,4 +1,4 @@
-package net.cubed.webservices.dto;
+package net.sw4pspace.cubedwebservices.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,17 +8,17 @@ import lombok.ToString;
 import javax.persistence.*;
 
 /**
- * DTO for the whitelist table
+ * DTO for the ops table
  *
  * @author jdesive
  */
 @Entity
 @Getter
 @Setter
-@Table(name = "whitelist")
+@Table(name = "ops")
 @NoArgsConstructor
 @ToString(of = { "id" , "name", "uuid" })
-public class WhiteListPlayer {
+public class OpPlayer {
 
     @Id
     @Column(columnDefinition = "serial")

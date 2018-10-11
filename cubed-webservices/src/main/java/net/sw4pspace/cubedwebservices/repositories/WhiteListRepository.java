@@ -1,6 +1,6 @@
-package net.cubed.webservices.repositories;
+package net.sw4pspace.cubedwebservices.repositories;
 
-import net.cubed.webservices.dto.WhiteListPlayer;
+import net.sw4pspace.cubedwebservices.dto.WhiteListPlayer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

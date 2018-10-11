@@ -1,4 +1,4 @@
-package net.cubed.webservices.dto;
+package net.sw4pspace.cubedwebservices.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
