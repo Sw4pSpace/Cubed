@@ -8,6 +8,7 @@
         <version>2018.10.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+
     <artifactId>cubed-server</artifactId>
 
     <dependencies>
@@ -134,8 +135,7 @@
     </dependencies>
 
     <build>
-        <finalName>cubedserver</finalName>
-
+        <finalName>${project.artifactId}</finalName>
         <directory>../target</directory>
 
         <resources>
