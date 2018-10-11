@@ -7,8 +7,8 @@
 ################################################
 #
 # This script is used to deploy Cubed as an
-# all-in-one server. Meaning all services are
-# on the same host.
+# all-in-one server from git. Meaning all
+# services are on the same host.
 #
 # @author jdesive
 ################################################
