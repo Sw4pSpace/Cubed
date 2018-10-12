@@ -16,7 +16,6 @@
             <groupId>net.sw4pspace</groupId>
             <artifactId>cubed-api</artifactId>
             <version>2018.10.0-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.fusesource.jansi</groupId>

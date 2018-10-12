@@ -21,7 +21,6 @@
 
     <build>
         <finalName>${project.artifactId}</finalName>
-        <directory>../target</directory>
     </build>
 
 </project>

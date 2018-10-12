@@ -1,6 +1,5 @@
 package net.glowstone.io.persistence;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
 

@@ -6,7 +6,6 @@ import net.glowstone.GlowServer;
 
 import java.sql.*;
 import java.util.List;
-import java.util.logging.Level;
 
 public class PersistenceManagerImpl implements PersistenceManager {
 

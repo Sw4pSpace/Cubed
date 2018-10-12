@@ -2,7 +2,6 @@ package net.glowstone;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import lombok.extern.slf4j.Slf4j;
 import net.glowstone.block.entity.state.GlowDispenser;
 import net.glowstone.constants.GlowEnchantment;
 import net.glowstone.constants.GlowPotionEffect;
