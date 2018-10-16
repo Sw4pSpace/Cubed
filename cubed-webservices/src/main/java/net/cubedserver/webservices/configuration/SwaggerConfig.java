@@ -1,5 +1,6 @@
 package net.cubedserver.webservices.configuration;
 
+import net.cubedserver.webservices.controller.BannedController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -22,7 +23,7 @@ public class SwaggerConfig {
     public Docket produceApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("net.cubedserver.webservices.controller"))
+                .apis(RequestHandlerSelectors.basePackage(BannedController.class.getPackage().getName()))
                 .paths(any())
                 .build()
                 .apiInfo(new ApiInfo(
