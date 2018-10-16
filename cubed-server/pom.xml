@@ -135,16 +135,13 @@
 
     <build>
         <finalName>${project.artifactId}</finalName>
-        <directory>../target</directory>
+        <defaultGoal>package</defaultGoal>
 
         <resources>
             <resource>
                 <directory>${project.basedir}/src/main/resources</directory>
             </resource>
         </resources>
-
-        <defaultGoal>package</defaultGoal>
-
 
         <plugins>
             <plugin>
@@ -163,30 +160,6 @@
                     </execution>
                 </executions>
             </plugin>
-           <!-- <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.0.0</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.puppycrawl.tools</groupId>
-                        <artifactId>checkstyle</artifactId>
-                        <version>8.9</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <configLocation>../etc/checkstyle.xml</configLocation>
-                    <headerLocation>${project.basedir}/LICENSE</headerLocation>
-                </configuration>
-            </plugin>-->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>animal-sniffer-maven-plugin</artifactId>
