@@ -1,6 +1,6 @@
-package net.sw4pspace.cubedwebservices.repositories;
+package net.cubedserver.webservices.repositories;
 
-import net.sw4pspace.cubedwebservices.dto.BannedPlayer;
+import net.cubedserver.webservices.dto.BannedPlayer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

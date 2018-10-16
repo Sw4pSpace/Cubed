@@ -1,17 +1,17 @@
-package net.sw4pspace.cubedwebservices.controller;
+package net.cubedserver.webservices.controller;
 
 import io.swagger.annotations.ApiOperation;
-import net.sw4pspace.cubedwebservices.dto.WhiteListPlayer;
-import net.sw4pspace.cubedwebservices.repositories.WhiteListRepository;
-import net.sw4pspace.cubedwebservices.repositories.criteria.WhiteListPlayerCriteria;
-import net.sw4pspace.cubedwebservices.repositories.specification.WhiteListPlayerSpecification;
+import net.cubedserver.webservices.dto.OpPlayer;
+import net.cubedserver.webservices.dto.WhiteListPlayer;
+import net.cubedserver.webservices.exception.InvalidOpPlayerException;
+import net.cubedserver.webservices.exception.InvalidWhiteListPlayerException;
+import net.cubedserver.webservices.repositories.criteria.WhiteListPlayerCriteria;
+import net.cubedserver.webservices.repositories.specification.WhiteListPlayerSpecification;
+import net.cubedserver.webservices.repositories.WhiteListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.data.jpa.domain.Specifications.where;
 
@@ -48,6 +48,15 @@ public class WhiteListController {
                 .and(WhiteListPlayerSpecification.withName(criteria.getName()))
                 .and(WhiteListPlayerSpecification.withUuid(criteria.getUuid())), new PageRequest(page, size));
 
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    @ApiOperation(tags = {"WhiteList"}, value = "Add a WhiteListed Player", nickname = "Add Whitelisted Player", produces = "applications/json")
+    public WhiteListPlayer addOpPlayer(@RequestBody WhiteListPlayer whiteListPlayer) {
+        if(!whiteListPlayer.isValid()){
+            throw new InvalidWhiteListPlayerException(whiteListPlayer);
+        }
+        return whiteListRepository.save(whiteListPlayer);
     }
 
 }

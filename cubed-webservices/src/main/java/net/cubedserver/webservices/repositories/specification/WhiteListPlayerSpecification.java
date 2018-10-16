@@ -1,6 +1,6 @@
-package net.sw4pspace.cubedwebservices.repositories.specification;
+package net.cubedserver.webservices.repositories.specification;
 
-import net.sw4pspace.cubedwebservices.dto.WhiteListPlayer;
+import net.cubedserver.webservices.dto.WhiteListPlayer;
 import org.springframework.data.jpa.domain.Specification;
 
 /**

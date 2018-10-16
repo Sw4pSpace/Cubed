@@ -1,4 +1,4 @@
-package net.sw4pspace.cubedwebservices.configuration;
+package net.cubedserver.webservices.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +12,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.Collections;
 
 import static springfox.documentation.builders.PathSelectors.any;
+import static springfox.documentation.builders.PathSelectors.regex;
 
 @Configuration
 @EnableSwagger2
@@ -21,23 +22,18 @@ public class SwaggerConfig {
     public Docket produceApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("net.cubed.webservices.controller"))
+                .apis(RequestHandlerSelectors.basePackage("net.cubedserver.webservices.controller"))
                 .paths(any())
                 .build()
-                .apiInfo(apiInfo());
-    }
-
-    private ApiInfo apiInfo() {
-        ApiInfo apiInfo = new ApiInfo(
-                "Cubed WebServices",
-                "WebServices for the Cubed Minecraft Server",
-                "1.0",
-                "Terms of service",
-                new Contact("@sw4psapce", "https://github.com/sw4psapce", ""),
-                "",
-                "",
-                Collections.emptyList());
-        return apiInfo;
+                .apiInfo(new ApiInfo(
+                        "Cubed WebServices",
+                        "WebServices for the Cubed Minecraft Server",
+                        "1.0",
+                        "Terms of service",
+                        new Contact("Sw4pSpace", "http://cubedserver.net", ""),
+                        "",
+                        "",
+                        Collections.emptyList()));
     }
 
 }

@@ -1,6 +1,6 @@
-package net.sw4pspace.cubedwebservices.repositories.specification;
+package net.cubedserver.webservices.repositories.specification;
 
-import net.sw4pspace.cubedwebservices.dto.OpPlayer;
+import net.cubedserver.webservices.dto.OpPlayer;
 import org.springframework.data.jpa.domain.Specification;
 
 /**

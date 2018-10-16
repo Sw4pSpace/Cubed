@@ -1,4 +1,4 @@
-package net.sw4pspace.cubedwebservices.repositories.criteria;
+package net.cubedserver.webservices.repositories.criteria;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

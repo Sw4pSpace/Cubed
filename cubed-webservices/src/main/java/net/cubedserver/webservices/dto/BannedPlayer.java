@@ -1,5 +1,7 @@
-package net.sw4pspace.cubedwebservices.dto;
+package net.cubedserver.webservices.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.base.Strings;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +21,7 @@ import java.util.Date;
 @Table(name = "banned")
 @NoArgsConstructor
 @ToString(of = { "id" , "target" })
-public class BannedPlayer {
+public class BannedPlayer implements HasValidator{
 
     @Id
     @Column(columnDefinition = "serial")
@@ -35,6 +37,12 @@ public class BannedPlayer {
     @PrePersist
     public void prePersist() {
         created = new Date(System.currentTimeMillis());
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isValid() {
+        return !Strings.isNullOrEmpty(target);
     }
 
 }

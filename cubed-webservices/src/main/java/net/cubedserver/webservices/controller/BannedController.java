@@ -1,17 +1,15 @@
-package net.sw4pspace.cubedwebservices.controller;
+package net.cubedserver.webservices.controller;
 
 import io.swagger.annotations.ApiOperation;
-import net.sw4pspace.cubedwebservices.repositories.BannedRepository;
-import net.sw4pspace.cubedwebservices.repositories.specification.BannedPlayerSpecification;
-import net.sw4pspace.cubedwebservices.dto.BannedPlayer;
-import net.sw4pspace.cubedwebservices.repositories.criteria.BannedPlayerCriteria;
+import net.cubedserver.webservices.dto.BannedPlayer;
+import net.cubedserver.webservices.exception.InvalidBannedPlayerException;
+import net.cubedserver.webservices.repositories.BannedRepository;
+import net.cubedserver.webservices.repositories.criteria.BannedPlayerCriteria;
+import net.cubedserver.webservices.repositories.specification.BannedPlayerSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -56,6 +54,15 @@ public class BannedController {
                 .and(BannedPlayerSpecification.withSource(criteria.getSource()))
                 .and(BannedPlayerSpecification.withReason(criteria.getReason())), new PageRequest(page, size));
 
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    @ApiOperation(tags = {"Banned"}, value = "Add a Banned Player", nickname = "Add Banned", produces = "applications/json")
+    public BannedPlayer addBannedPlayer(@RequestBody BannedPlayer bannedPlayer) {
+        if(!bannedPlayer.isValid()){
+            throw new InvalidBannedPlayerException(bannedPlayer);
+        }
+        return bannedRepository.save(bannedPlayer);
     }
 
 }

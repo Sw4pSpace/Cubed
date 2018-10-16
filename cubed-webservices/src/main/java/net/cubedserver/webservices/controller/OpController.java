@@ -1,17 +1,15 @@
-package net.sw4pspace.cubedwebservices.controller;
+package net.cubedserver.webservices.controller;
 
 import io.swagger.annotations.ApiOperation;
-import net.sw4pspace.cubedwebservices.repositories.specification.OpPlayerSpecification;
-import net.sw4pspace.cubedwebservices.dto.OpPlayer;
-import net.sw4pspace.cubedwebservices.repositories.OpsRepository;
-import net.sw4pspace.cubedwebservices.repositories.criteria.OpPlayerCriteria;
+import net.cubedserver.webservices.exception.InvalidOpPlayerException;
+import net.cubedserver.webservices.repositories.OpsRepository;
+import net.cubedserver.webservices.repositories.criteria.OpPlayerCriteria;
+import net.cubedserver.webservices.repositories.specification.OpPlayerSpecification;
+import net.cubedserver.webservices.dto.OpPlayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.data.jpa.domain.Specifications.where;
 
@@ -48,6 +46,15 @@ public class OpController {
                 .and(OpPlayerSpecification.withName(criteria.getName()))
                 .and(OpPlayerSpecification.withUuid(criteria.getUuid())), new PageRequest(page, size));
 
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    @ApiOperation(tags = {"Op"}, value = "Add a Server Operators", nickname = "Add Op", produces = "applications/json")
+    public OpPlayer addOpPlayer(@RequestBody OpPlayer opPlayer) {
+        if(!opPlayer.isValid()){
+            throw new InvalidOpPlayerException(opPlayer);
+        }
+        return opsRepository.save(opPlayer);
     }
 
 }
