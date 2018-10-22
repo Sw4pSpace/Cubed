@@ -21,7 +21,7 @@ import static org.springframework.data.jpa.domain.Specifications.where;
  * @author jdesive
  */
 @RestController
-@RequestMapping("/banned")
+@RequestMapping("/api/banned")
 public class BannedController {
 
     private final BannedRepository bannedRepository;

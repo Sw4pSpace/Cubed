@@ -1,0 +1,21 @@
+:root {
+    --sw4p-button-text-color: white;
+    --sw4p-header-background-color: var(--color-primary-dark);
+}
+
+.flex-container-row-center {
+
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    margin: 8px;
+}
+
+.flex-container-row-center .left, .flex-container-row-center .right {
+    flex: 0 1 25%;
+}
+
+.flex-container-row-center .center {
+    flex: 1 1 auto;
+}

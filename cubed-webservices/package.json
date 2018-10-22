@@ -1,0 +1,9 @@
+{
+  "name": "cubed-webservices",
+  "description": "",
+  "version": "1.0.0",
+  "license": "",
+  "dependencies": {
+    "bower": "1.8.4"
+  }
+}

@@ -19,7 +19,7 @@ import static org.springframework.data.jpa.domain.Specifications.where;
  * @author jdesive
  */
 @RestController
-@RequestMapping("/op")
+@RequestMapping("/api/op")
 public class OpController {
 
     private final OpsRepository opsRepository;

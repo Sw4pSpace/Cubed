@@ -21,7 +21,7 @@ import static org.springframework.data.jpa.domain.Specifications.where;
  * @author jdesive
  */
 @RestController
-@RequestMapping("/whitelist")
+@RequestMapping("/api/whitelist")
 public class WhiteListController {
 
     private final WhiteListRepository whiteListRepository;

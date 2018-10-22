@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/header :: header-elements"/>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            --error-page-symbol-color: var(--color-warning);
+        }
+    </style>
+</head>
+<body>
+<cubed-error-page message="Oops, the page you are looking for does not exist or has been moved."
+                  type="404"
+                  symbol="&#x3f;"
+                  homepage="/"></cubed-error-page>
+</body>
+</html>

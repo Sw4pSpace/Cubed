@@ -1,0 +1,42 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    font-family: 'Doppio One', 'Roboto', sans-serif;
+}
+
+sw4p-header a, sw4p-header sw4p-button {
+    height: 100%;
+    margin: 0;
+}
+
+.page-header {
+    flex: 0 1 64px;
+    --sw4p-button-text-color: var(--color-primary-text);
+}
+
+.page-footer {
+    flex: 0 1 32px;
+}
+
+.page-content {
+    flex: 1 1 auto;
+    height: 100%;
+    --sw4p-button-text-color: var(--color-secondary-text);
+}
+
+/* Helper Styles*/
+
+.center-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.height--100pct {
+    height: 100%;
+}
