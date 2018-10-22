@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.bukkit.entity.EntityType;
+import org.jetbrains.annotations.NonNls;
 
 import static net.glowstone.entity.ai.AITask.*;
 
@@ -27,7 +28,7 @@ public class EntityDirector {
      * @param state a mob state
      * @param task the name of a task
      */
-    public static void registerEntityMobState(EntityType entity, MobState state, AITask task) {
+    public static void registerEntityMobState(EntityType entity, MobState state, @NonNls AITask task) {
         Map<MobState, List<AITask>> states =
                 mobStates.computeIfAbsent(entity, entity_ -> new HashMap<>());
         List<AITask> tasks = states.computeIfAbsent(state, state_ -> new ArrayList<>());
@@ -56,7 +57,7 @@ public class EntityDirector {
      *         to invoke this task
      * @param task the class that implements the task
      */
-    public static void registerEntityTask(AITask name, Class<? extends EntityTask> task) {
+    public static void registerEntityTask(@NonNls AITask name, Class<? extends EntityTask> task) {
         tasks.put(name, task);
     }
 
