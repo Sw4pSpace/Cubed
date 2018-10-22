@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <div th:replace="fragments/header :: header-elements"/>
+    <div th:replace="fragments/header :: header-css"/>
+    <link rel="stylesheet" type="text/css" href="css/login.css"/>
+</head>
+<body>
+<div class="page-content center-content">
+    <div class="form">
+        <div class="thumbnail"><img src="/img/logo.png"/></div>
+
+        <div th:if="${param.error}">
+            <div class="error-alert">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                <span>Username/Password invalid</span>
+            </div>
+        </div>
+
+        <div th:if="${param.logout}">
+            <div class="success-alert">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                <span>Logged out</span>
+            </div>
+        </div>
+
+        <form th:action="@{/login}" method="post">
+            <fieldset style="border: none;">
+                <input type="text" placeholder="Username" name="username" id="username"/>
+                <input type="password" placeholder="Password" name="password" id="password"/>
+                <input class="btn" type="submit" value="Login"/>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>

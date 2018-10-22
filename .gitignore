@@ -27,3 +27,11 @@ dependency-reduced-pom.xml
 /worlds/
 /classes/
 /lib/
+/cubed-webservices/src/main/resources/bower_components/
+/cubed-webservices/node_modules/
+/cubed-webservices/src/main/resources/static/bower_components/
+/cubed-server/lib/
+/cubed-server/logs/
+/cubed-server/plugins/
+/cubed-server/worlds/
+/cubed-server/config/

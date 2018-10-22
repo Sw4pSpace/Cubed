@@ -99,4 +99,27 @@
         </rollback>
     </changeSet>
 
+    <changeSet id="drop_table_account_if_exists" author="jdesive">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="account"/>
+        </preConditions>
+        <dropTable tableName="account" cascadeConstraints="true"/>
+    </changeSet>
+
+    <changeSet id="create_account_table" author="jdesive">
+        <createTable tableName="account">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" unique="true"/>
+            </column>
+            <column name="username" type="text">
+                <constraints unique="true"/>
+            </column>
+            <column name="password" type="text"/>
+            <column name="created" type="datetime"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="account"/>
+        </rollback>
+    </changeSet>
+
 </databaseChangeLog>

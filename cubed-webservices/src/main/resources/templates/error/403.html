@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/header :: header-elements"/>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <cubed-error-page message="You do not have access to this page. If you believe this is an error please contact an administrator."
+            type="403"
+            symbol="&#x1f512;"
+            homepage="/"></cubed-error-page>
+</body>
+</html>

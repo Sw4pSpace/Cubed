@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard</title>
+    <div th:replace="fragments/header :: header-elements"/>
+    <div th:replace="fragments/header :: header-css"/>
+    <link rel="stylesheet" href="css/dashboard.css"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header"/>
+
+<div class="page-content">
+    <div class="flex-container-row-center">
+        <div class="left">
+            <a th:href="@{/banned}"><sw4p-button block="true" intent="primary" size="large">Banned List</sw4p-button></a>
+            <a th:href="@{/whitelist}"><sw4p-button block="true" intent="primary" size="large">Whitelist</sw4p-button></a>
+            <a th:href="@{/operators}"><sw4p-button block="true" intent="primary" size="large">Operators</sw4p-button></a>
+        </div>
+        <div class="center">
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/header :: header-elements"/>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<cubed-error-page message="An error has occurred. Server may currently be under high load, please try again after a bit."
+                  type="500"
+                  symbol="&#x21;"
+                  homepage="/"></cubed-error-page>
+</body>
+</html>
