@@ -1,0 +1,12 @@
+[Unit]
+Description=Cubed server
+[Service]
+User=ubuntu
+WorkingDirectory=/opt/cubed-webservices
+ExecStart=/opt/cubed-webservices/start.sh
+SuccessExitStatus=143
+TimeoutStopSec=10
+Restart=on-failure
+RestartSec=5
+[Install]
+WantedBy=multi-user.target
