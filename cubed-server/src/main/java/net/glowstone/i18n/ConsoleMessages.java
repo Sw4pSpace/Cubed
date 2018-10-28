@@ -151,26 +151,26 @@ public interface ConsoleMessages {
 
         interface Net {
             LoggableLocalizedString BIND_FAILED = new LoggableLocalizedStringImpl(
-                    "console.net.bind-failed", Level.SEVERE
+                    "console.net.bind-failed", Level.ERROR
             );
 
             LoggableLocalizedString BIND_FAILED_UNKNOWN = new LoggableLocalizedStringImpl(
-                    "console.net.bind-failed.unknown", Level.SEVERE
+                    "console.net.bind-failed.unknown", Level.ERROR
             );
 
             LoggableLocalizedString CANNOT_ASSIGN = new LoggableLocalizedStringImpl(
-                    "console.net.bind-failed.cannot-assign", Level.SEVERE
+                    "console.net.bind-failed.cannot-assign", Level.ERROR
             );
 
             interface Crypt {
                 LoggableLocalizedString AUTH_INTERNAL = new LoggableLocalizedStringImpl(
-                        "glowstone.kick.crypt.auth-internal", Level.SEVERE);
+                        "glowstone.kick.crypt.auth-internal", Level.ERROR);
 
                 LoggableLocalizedString BAD_UUID = new LoggableLocalizedStringImpl(
-                        "glowstone.kick.crypt.invalid-uuid", Level.SEVERE);
+                        "glowstone.kick.crypt.invalid-uuid", Level.ERROR);
 
                 LoggableLocalizedString HASH_FAILED = new LoggableLocalizedStringImpl(
-                        "glowstone.kick.crypt.sha1-failed", Level.SEVERE);
+                        "glowstone.kick.crypt.sha1-failed", Level.ERROR);
 
                 LoggableLocalizedString INIT_FAILED = new LoggableLocalizedStringImpl(
                         "console.net.crypt.init-failed", Level.ERROR);
@@ -180,7 +180,7 @@ public interface ConsoleMessages {
             }
 
             LoggableLocalizedString IN_USE = new LoggableLocalizedStringImpl(
-                    "console.net.bind-failed.in-use", Level.SEVERE
+                    "console.net.bind-failed.in-use", Level.ERROR
             );
         }
     }
@@ -384,16 +384,16 @@ public interface ConsoleMessages {
 
         interface Crypt {
             LoggableLocalizedString AUTH_FAILED = new LoggableLocalizedStringImpl(
-                    "console.net.crypt.user-auth", Level.WARNING);
+                    "console.net.crypt.user-auth", Level.WARN);
 
             LoggableLocalizedString BAD_SHARED_SECRET = new LoggableLocalizedStringImpl(
-                    "glowstone.kick.crypt.shared-secret", Level.WARNING);
+                    "glowstone.kick.crypt.shared-secret", Level.WARN);
 
             LoggableLocalizedString BAD_VERIFY_TOKEN = new LoggableLocalizedStringImpl(
-                    "glowstone.kick.crypt.verify-token", Level.WARNING);
+                    "glowstone.kick.crypt.verify-token", Level.WARN);
 
             LoggableLocalizedString URL_ENCODE_IP = new LoggableLocalizedStringImpl(
-                    "console.net.crypt.url-encode-ip", Level.WARNING);
+                    "console.net.crypt.url-encode-ip", Level.WARN);
         }
 
         interface Entity {
@@ -402,7 +402,7 @@ public interface ConsoleMessages {
             );
 
             LoggableLocalizedString LOAD_TOO_LATE = new LoggableLocalizedStringImpl(
-                    "console.entity.load-too-late", Level.WARNING
+                    "console.entity.load-too-late", Level.WARN
             );
 
             LoggableLocalizedString PARTICLE_INVALID = new LoggableLocalizedStringImpl(
@@ -414,7 +414,7 @@ public interface ConsoleMessages {
             );
 
             LoggableLocalizedString SAVE_FAILED_PASSENGER = new LoggableLocalizedStringImpl(
-                    "console.entity.save-failed.passenger", Level.WARNING
+                    "console.entity.save-failed.passenger", Level.WARN
             );
 
             LoggableLocalizedString UNKNOWN = new LoggableLocalizedStringImpl(
@@ -565,7 +565,7 @@ public interface ConsoleMessages {
         interface Fishing {
 
             LoggableLocalizedString REWARDS_INVALID = new LoggableLocalizedStringImpl(
-                    "console.fishing.rewards-invalid", Level.WARNING
+                    "console.fishing.rewards-invalid", Level.WARN
             );
         }
     }
