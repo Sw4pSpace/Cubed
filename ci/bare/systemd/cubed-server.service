@@ -1,7 +1,7 @@
 [Unit]
 Description=Cubed server
 [Service]
-User=ubuntu
+User=root
 WorkingDirectory=/opt/cubed-server
 ExecStart=/opt/cubed-server/start.sh
 SuccessExitStatus=143
