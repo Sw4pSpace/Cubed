@@ -66,23 +66,19 @@
 
   <repositories>
     <repository>
-      <id>glowstone-snapshots</id>
-      <url>https://repo.glowstone.net/content/groups/public</url>
-    </repository>
-    <repository>
       <id>sw4pspace</id>
-      <url>https://nexus.sw4pspace.net/reposistory/public</url>
+      <url>https://nexus.sw4pspace.net/nexus/content/groups/public/</url>
     </repository>
   </repositories>
 
   <distributionManagement>
     <repository>
       <id>sw4pspace-upstream</id>
-      <url>http://nexus.sw4pspace.net/nexus/content/repositories/releases/</url>
+      <url>https://nexus.sw4pspace.net/nexus/content/repositories/releases/</url>
     </repository>
     <snapshotRepository>
       <id>sw4pspace-upstream</id>
-      <url>http://nexus.sw4pspace.net/nexus/content/repositories/snapshots/</url>
+      <url>https://nexus.sw4pspace.net/nexus/content/repositories/snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
 
