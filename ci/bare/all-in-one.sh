@@ -63,7 +63,7 @@ fi
 
 # Copy final jars
 sudo mkdir /opt/cubed-server
-sudo cp target/cubedserver.jar /opt/cubed-server/cubedserver.jar
+sudo cp cubed-server/target/cubed-server.jar /opt/cubed-server/cubedserver.jar
 sudo mkdir /opt/cubed-webservices
 sudo cp cubed-webservices/target/cubed-webservices.jar /opt/cubed-webservices/cubed-webservices.jar
 
